@@ -1,0 +1,94 @@
+main {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: navy;
+}
+
+main>div,
+main>section {
+    width: 50%;
+    text-align: center;
+    color: beige;
+}
+
+section {
+    overflow: hidden;
+}
+
+main>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#homeContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    text-wrap: nowrap;
+}
+
+#buttonContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 10%;
+}
+
+button {
+    border-radius: 28px;
+    padding: 16px 20px;
+    background-color: beige;
+    color: navy;
+}
+
+img {
+    width: 100%;
+}
+
+.selector {
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: auto;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(245, 245, 220, 0.85);
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.3s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.selector button {
+    margin: 3px;
+    width: 5em;
+    background-color: navy;
+    color: beige;
+}
+
+#sefer button {
+    width: max-content;
+}
