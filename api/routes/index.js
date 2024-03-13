@@ -3,6 +3,8 @@ var router = express.Router();
 const fs = require('fs').promises;
 const tehilimObject = require('../tehilimObject');
 var path = require('path');
+const cors = require('cors');
+// const app = express();
 
 let tehilim;
 
@@ -11,6 +13,8 @@ let tehilim;
   const text = tehilimArr.text;
   tehilim = text.map((x, i) => { return tehilimObject(x, i); });
 })();
+
+router.use(cors());
 
 // /* GET home page. */
 // router.get('/', function (req, res) {
