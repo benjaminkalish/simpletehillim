@@ -8,9 +8,9 @@ export default function Main() {
     const [perakimShown, setPerakimShown] = useState(false)
     const [sefarimShown, setSefarimShown] = useState(false)
 
-    const perakim = new Array(150).fill(0).map((x, i) => x = <button>{gematriya(i + 1)}</button>)
+    const perakim = new Array(150).fill(0).map((x, i) => x = <button id={i+1}>{gematriya(i + 1)}</button>)
 
-    const sefarim = new Array(5).fill(0).map((x, i) => x = <button id='i+1'>ספר {gematriya(i + 1)}</button>)
+    const sefarim = new Array(5).fill(0).map((x, i) => x = <button id={i+1}>ספר {gematriya(i + 1)}</button>)
 
     const date = new Date()
 
