@@ -1,0 +1,42 @@
+#textContainer {
+    grid-column: 4 / 5;
+    white-space: pre-wrap;
+    text-align: justify;
+    direction: rtl;
+    font-size: xxx-large;
+}
+
+#readerContainer {
+    display: grid;
+    grid-template-rows: 10px 50px;
+    grid-template-columns: 10px 50px 1fr 3fr 1fr 60px;
+    background-color: #fdfbf7;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#menu {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    background-color: #fdfbf7;
+    color: black;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 33px;
+    padding-bottom: 20px;
+    border: black solid 1px;
+}
+
+#menu:hover {
+    border: black solid 2px;
+}
+
+#menu:active {
+    background-color: black;
+    color: #fdfbf7;
+}
