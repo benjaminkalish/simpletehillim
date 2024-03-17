@@ -4,7 +4,6 @@ const fs = require('fs').promises;
 const tehilimObject = require('../tehilimObject');
 var path = require('path');
 const cors = require('cors');
-// const app = express();
 
 let tehilim;
 
@@ -16,17 +15,12 @@ let tehilim;
 
 router.use(cors());
 
-// /* GET home page. */
-// router.get('/', function (req, res) {
-//   res.render('index', { title: 'Express' });
-// });
-
 router.get('/perek/:num', function (req, res, next) {
   const perek = Number(req.params.num);
   if (perek < 1 || perek > 150 || isNaN(perek)) {
     return next('no such perek');
   }
-    res.json(tehilim[perek - 1]);
+  res.json([tehilim[perek - 1]]);
 });
 
 router.get('/month/:num', function (req, res, next) {
@@ -60,18 +54,23 @@ router.get('/month/:num', function (req, res, next) {
 
 router.get('/week/:num', function (req, res, next) {
   const day = Number(req.params.num);
-  if (day >= 1 && day <= 7){
+  if (day < 1 || day > 7) {
+    next('invalid day of week');
+  }
+  else {
     res.json(tehilim.filter(x => x.dayWeek === day));
   }
-  next('invalid day of week');
 });
 
 router.get('/sefer/:num', function (req, res, next) {
   const sefer = Number(req.params.num);
-  if (sefer >= 1 && sefer <= 5){
+  if (sefer < 1 || sefer > 5) {
+    next('invalid day of week');
+  }
+  else {
     res.json(tehilim.filter(x => x.sefer === sefer));
   }
-  next('invalid day of week');
+
 });
 
 module.exports = router;
