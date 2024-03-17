@@ -1,12 +1,37 @@
+@font-face {
+    font-family: "Stam";
+    src: url(../fonts/StamAshkenazCLMMedium.ttf);
+}
+
+@font-face {
+    font-family: "David";
+    src: url(../fonts/DavidLibre-Medium.ttf);
+}
+
+@font-face {
+    font-family: "Frank-Ruhl";
+    src: url(../fonts/FrankRuhlLibre-Regular.ttf);
+}
+
 #textContainer {
     grid-column: 5 / 6;
+   /*  white-space: pre-wrap;
+    text-align: justify;
+    direction: rtl;
+    font-size: xxx-large; */
+    overflow-y: auto;
+    grid-row: 1 / 4;
+    /* scrollbar-width: none; */
+    /* grid-row-start: 3; */
+}
+
+#innerTextContainer {
     white-space: pre-wrap;
     text-align: justify;
     direction: rtl;
     font-size: xxx-large;
-    overflow-y: auto;
-    grid-row: 1 / 4;
-    scrollbar-width: none;
+    overflow-y: visible;
+    font-family: Frank-Ruhl;
 }
 
 #readerContainer {
@@ -57,3 +82,22 @@
     transition: width 0.25s ease-in-out;
     width: 100% !important;
 }
+
+ul {
+    margin-top: 70px;
+    list-style-type: none;
+    padding: 0;
+}
+
+ul button {
+    width: 100%;
+    border-radius: 0;
+}
+
+/* ul button:hover {
+    background-color: lightblue;
+}
+
+ul button:active {
+    font-style: italic;
+} */

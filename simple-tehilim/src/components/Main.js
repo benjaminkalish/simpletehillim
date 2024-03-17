@@ -11,9 +11,14 @@ export default function Main() {
 
     const navigate = useNavigate()
 
-    const perakim = new Array(150).fill(0).map((x, i) => x = <button onClick={(e) => navigate(`/perek/${e.target.id}`)} id={i + 1} key={i}>{gematriya(i + 1)}</button>)
+    function navigateTo(e, url) {
+        e.preventDefault()
+        navigate(url)
+    }
 
-    const sefarim = new Array(5).fill(0).map((x, i) => x = <button id={i + 1} onClick={(e) => navigate(`/sefer/${e.target.id}`)} key={i}>ספר {gematriya(i + 1)}</button>)
+    const perakim = new Array(150).fill(0).map((x, i) => x = <a className='buttonLink' key={i} href={`/perek/${i + 1}`} onClick={(e) => navigateTo(e, `/perek/${i + 1}`)}><button>{gematriya(i + 1)}</button></a>)
+
+    const sefarim = new Array(5).fill(0).map((x, i) => x = <a className='buttonLink' href={`/sefer/${i + 1}`} onClick={(e) => navigateTo(e, `/sefer/${i + 1}`)} key={i}><button>ספר {gematriya(i + 1)}</button></a>)
 
     const date = new Date()
 
@@ -31,9 +36,10 @@ export default function Main() {
                 <div id='buttonContainer'>
                     <button onClick={() => { setPerakimShown(true); setSefarimShown(false); }}>Select Perek</button>
                     <button onClick={() => { setPerakimShown(false); setSefarimShown(true); }}>Select Sefer</button>
-                    <button onClick={(e) => navigate(`/month/${hebDay.getDate()}`)}>Tehilim for {hebDay.renderGematriya().split(' ').slice(0, -1).join(' ')/* .replaceAll('׳', '') */}</button>
-                    <button onClick={(e) => navigate(`/week/${date.getDay() + 1}`)}>Tehilim for יום {gematriya(date.getDay() + 1)}</button>
+                    <a className='buttonLink' href={`/month/${hebDay.getDate()}`} onClick={(e) => navigateTo(e, `/month/${hebDay.getDate()}`)}><button>Tehilim for {hebDay.renderGematriya().split(' ').slice(0, -1).join(' ')/* .replaceAll('׳', '') */}</button></a>
+                    <a className='buttonLink' href={`/week/${date.getDay() + 1}`} onClick={(e) => navigateTo(e, `/week/${date.getDay() + 1}`)}><button>Tehilim for יום {gematriya(date.getDay() + 1)}</button></a>
                 </div>
+                <small></small>
             </div>
             <section>
                 {perakimShown && <div className='selector'>{perakim}</div>}

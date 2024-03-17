@@ -50,6 +50,11 @@ button {
     background-color: beige;
     color: navy;
     font-size: 0.9rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color:#eaeab4;
 }
 
 img {
@@ -84,12 +89,25 @@ img {
 }
 
 .selector button {
-    margin: 3px;
     width: 5em;
     background-color: navy;
     color: beige;
 }
 
+.selector button:hover {
+    width: 5em;
+    background-color: mediumblue;
+    color: beige;
+}
+
 #sefer button {
     width: max-content;
+}
+
+.buttonLink {
+    border-radius: 28px;
+}
+
+section .buttonLink {
+    margin: 3px;
 }
