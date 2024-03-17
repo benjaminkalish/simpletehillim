@@ -22,7 +22,7 @@ function App() {
 
 async function loader(pathName) { 
   try {
-      const response = await fetch(/* window.location.origin */'http://localhost:8080' + pathName)
+      const response = await fetch(/* window.location.origin + '/api'*/'http://localhost:8080/api' + pathName)
       if (!response.ok) {
           throw new Error(`${response.status} ${response.statusText}`)
       }
