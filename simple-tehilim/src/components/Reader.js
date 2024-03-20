@@ -29,6 +29,7 @@ export default function Reader() {
     if (menuOpen) {
       e.target.parentElement.childNodes[1].className = ''
       menuButtonText.current = openSymbol
+      setFontShown(false)
     }
     else {
       e.target.parentElement.childNodes[1].className = 'slideOpen'
@@ -54,7 +55,19 @@ export default function Reader() {
     navigate(url)
   }
 
+  const fonts = {
+    times: '\'Times New Roman\', Times, serif',
+    david: 'David',
+    frank_ruhl: 'Frank-Ruhl',
+    stam: 'Stam'
+  }
+
   const [fontShown, setFontShown] = useState(false)
+  const [font, setFont] = useState(fonts.times)
+
+  const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
+
+
 
 
   // const foo = useGetElementDimensions(innerTextContainerRef.current)
@@ -111,16 +124,12 @@ export default function Reader() {
           <li>
             <a href='/' onClick={(e) => navigateTo(e, '/')}><button>Home</button></a>
             <button onClick={() => setFontShown(!fontShown)}>Select Font</button>
-            {fontShown && <ul>
-              <li>font1</li>
-              <li>font2</li>
-              <li>font3</li>
-            </ul>}
+            {fontShown && <ul>{fontList}</ul>}
           </li>
         </ul>
       </section>
       <div id='textContainer' onScroll={e => e.target.scrollTo(0, 0)}/* ref={textContainerRef} */>
-        <div id='innerTextContainer' ref={innerTextContainerRef} style={{ columnWidth: dimensions.width, left: left , fontSize: dimensions.width / 14 + 'px'}}>
+        <div id='innerTextContainer' ref={innerTextContainerRef} style={{ columnWidth: dimensions.width, left: left, fontSize: dimensions.width / 14 + 'px', fontFamily: font }}>
           <div id='text' ref={textRef}>{text}</div>
         </div>
       </div>

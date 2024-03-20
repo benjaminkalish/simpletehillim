@@ -117,12 +117,27 @@ ul {
 ul button {
     width: 100%;
     border-radius: 0;
+    background-color: navy;
+    color: #fdfbf7;
+    border: none;
+    text-align: left;
 }
 
-/* ul button:hover {
-    background-color: lightblue;
+.selectedFont {
+    background-color:cornflowerblue;
+    color: gold;
 }
 
-ul button:active {
-    font-style: italic;
-} */
+ul button:hover {
+    background-color: blue;
+    color: #fdfbf7;
+}
+
+li ul {
+    margin: 0;
+}
+
+li ul button {
+    text-align: right;
+    text-transform: capitalize;
+}
