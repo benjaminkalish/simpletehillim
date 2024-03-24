@@ -20,7 +20,7 @@
     direction: rtl;
     font-size: xxx-large; */
     overflow-y: auto;
-    grid-row: 1 / 4;
+    grid-row: 2 / 4;
     scrollbar-width: none;
     /* grid-row-start: 3; */
 }
@@ -61,7 +61,7 @@ font-family: 'Times New Roman', Times, serif;
 
 #readerContainer {
     display: grid;
-    grid-template-rows: 10px 50px;
+    grid-template-rows: 10px 50px 1fr 10px;
     grid-template-columns: 10px 50px 1fr 20px 3fr 20px 1fr 60px;
     background-color: #fdfbf7;
     height: 100%;
@@ -135,9 +135,15 @@ ul button:hover {
 
 li ul {
     margin: 0;
+    /* transition: height 5s ease-in-out; */
+    /* height: 0; */
 }
 
 li ul button {
     text-align: right;
     text-transform: capitalize;
 }
+
+/* li ul li {
+    height: 100%;
+} */

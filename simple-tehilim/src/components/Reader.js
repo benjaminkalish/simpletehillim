@@ -1,9 +1,9 @@
 import { useLoaderData } from 'react-router-dom'
 import { gematriya } from '@hebcal/core';
 import '../css/Reader.css'
-import { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useGetElementDimensions from '../useGetElementDimensions';
+// import useGetElementDimensions from '../useGetElementDimensions';
 
 export default function Reader() {
   const data = useLoaderData()
