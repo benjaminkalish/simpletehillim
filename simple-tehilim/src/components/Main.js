@@ -44,7 +44,7 @@ export default function Main() {
             <section>
                 {perakimShown && <div className='selector'>{perakim}</div>}
                 {sefarimShown && <div className='selector' id='sefer'>{sefarim}</div>}
-                <img src={lamnatzeach} alt='foo'></img>
+                <img src={lamnatzeach} alt='lamnatzeach menorah'></img>
             </section>
         </main>
     )
