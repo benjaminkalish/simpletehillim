@@ -35,8 +35,8 @@
     /* font-family: Stam; */
     /* font-family: David; */
     /* columns: 672px auto; */
-/* font-family: Verdana; */
-font-family: 'Times New Roman', Times, serif;
+    /* font-family: Verdana; */
+    font-family: 'Times New Roman', Times, serif;
     column-count: auto;
     /* column-width: 672px; */
     column-gap: 0;
@@ -49,6 +49,9 @@ font-family: 'Times New Roman', Times, serif;
 #text {
     max-width: fit-content;
     overflow: visible;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .perek h2 {
@@ -124,7 +127,7 @@ ul button {
 }
 
 .selectedFont {
-    background-color:cornflowerblue;
+    background-color: cornflowerblue;
     color: gold;
 }
 

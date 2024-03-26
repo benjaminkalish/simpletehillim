@@ -99,25 +99,32 @@ export default function Reader() {
   }, [])
 
   function foo(e) {
-    // console.log(e)
     if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SECTION' && e.target.tagName !== 'UL' && e.target.tagName !== 'LI') {
-      pageDown()
+      return true
+    }
+    return false
+  }
+
+  const pagesTurned = useRef(0)
+
+  function pageDown(e) {
+    if (foo(e) && left < textRef.current.offsetWidth - dimensions.width) {
+      setLeft(left + dimensions.width)
+      pagesTurned.current = pagesTurned.current + 1
+      // console.log(textRef.current.offsetWidth, left)
     }
   }
 
-
-  function pageDown() {
-    if (left < textRef.current.offsetWidth - dimensions.width)
-      setLeft(left + dimensions.width)
-    // console.log(textRef.current.offsetWidth, left)
-  }
-
-  function pageUp() {
-
+  function pageUp(e) {
+    e.preventDefault()
+    if (foo(e) && pagesTurned.current > 0) {
+      setLeft(left - dimensions.width)
+      pagesTurned.current = pagesTurned.current - 1
+    }
   }
 
   return (
-    <div id='readerContainer' onClick={foo}>
+    <div id='readerContainer' onClick={pageDown} onContextMenu={pageUp}>
       <button id='menuButton' onClick={menuButtonHandler}>{menuButtonText.current}</button>
       <section id='menu'>
         <ul>
