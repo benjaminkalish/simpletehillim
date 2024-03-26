@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom'
 import { gematriya } from '@hebcal/core';
 import '../css/Reader.css'
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useLayoutEffect, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import useGetElementDimensions from '../useGetElementDimensions';
 
@@ -67,9 +67,6 @@ export default function Reader() {
 
   const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
-
-
-
   // const foo = useGetElementDimensions(innerTextContainerRef.current)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
 
@@ -98,7 +95,7 @@ export default function Reader() {
     return () => window.removeEventListener('resize', updateDimensions)
   }, [])
 
-  function foo(e) {
+  function isMenuTarget(e) {
     if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SECTION' && e.target.tagName !== 'UL' && e.target.tagName !== 'LI') {
       return true
     }
@@ -107,24 +104,65 @@ export default function Reader() {
 
   const pagesTurned = useRef(0)
 
-  function pageDown(e) {
-    if (foo(e) && left < textRef.current.offsetWidth - dimensions.width) {
+  const pageForward = useCallback(() => {
+    if (left < textRef.current.offsetWidth - dimensions.width) {
       setLeft(left + dimensions.width)
       pagesTurned.current = pagesTurned.current + 1
+    }
+  }, [dimensions.width, left])
+
+  const pageBack = useCallback(() => {
+    if (pagesTurned.current > 0) {
+      setLeft(left - dimensions.width)
+      pagesTurned.current = pagesTurned.current - 1
+    }
+  }, [dimensions.width, left])
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      console.log(e.code)
+      if (e.code === 'Enter'
+        || e.code === 'Space'
+        || e.code === 'ArrowLeft'
+        || e.code === 'ArrowDown'
+        || e.code === 'PageDown') {
+        pageForward()
+      }
+      else if (e.code === 'ArrowRight' || e.code === 'PageUp' || e.code === 'ArrowUp') {
+        pageBack()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [pageBack, pageForward])
+
+  function clickForward(e) {
+    if (isMenuTarget(e)/*  && left < textRef.current.offsetWidth - dimensions.width */) {
+      pageForward()
       // console.log(textRef.current.offsetWidth, left)
     }
   }
 
-  function pageUp(e) {
+  function clickBack(e) {
     e.preventDefault()
-    if (foo(e) && pagesTurned.current > 0) {
-      setLeft(left - dimensions.width)
-      pagesTurned.current = pagesTurned.current - 1
+    if (isMenuTarget(e)/*  && pagesTurned.current > 0 */) {
+      pageBack()
+    }
+  }
+
+  function onWheelHandler(e){
+    if(e.deltaX < 0 || e.deltaY > 0){
+      pageForward()
+    }
+    else if (e.deltaX > 0 || e.deltaY < 0){
+      pageBack()
     }
   }
 
   return (
-    <div id='readerContainer' onClick={pageDown} onContextMenu={pageUp}>
+    <div id='readerContainer' onClick={clickForward} onContextMenu={clickBack} onWheel={onWheelHandler}>
       <button id='menuButton' onClick={menuButtonHandler}>{menuButtonText.current}</button>
       <section id='menu'>
         <ul>
