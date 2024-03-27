@@ -68,16 +68,27 @@ export default function Reader() {
   const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
   // const foo = useGetElementDimensions(innerTextContainerRef.current)
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0, fontSize: 0 })
 
   const [left, setLeft] = useState(0)
+
+  const [showFontSize, setShowFontSize] = useState(false)
+
+  function fontLarger() {
+    setDimensions({...dimensions, fontSize: dimensions.fontSize * 1.05})
+  }
+
+  function fontSmaller() {
+    setDimensions({...dimensions, fontSize: dimensions.fontSize * 0.95})
+  }
 
   useLayoutEffect(() => {
 
     function updateDimensions() {
       setDimensions({
         width: innerTextContainerRef.current.clientWidth,
-        height: innerTextContainerRef.current.clientHeight
+        height: innerTextContainerRef.current.clientHeight,
+        fontSize: innerTextContainerRef.current.clientWidth / 14
       })
       /* if (innerTextContainerRef.current.clientWidth !== 0) {
         console.log(left, left % innerTextContainerRef.current.clientWidth)
@@ -152,11 +163,11 @@ export default function Reader() {
     }
   }
 
-  function onWheelHandler(e){
-    if(e.deltaX < 0 || e.deltaY > 0){
+  function onWheelHandler(e) {
+    if (e.deltaX < 0 || e.deltaY > 0) {
       pageForward()
     }
-    else if (e.deltaX > 0 || e.deltaY < 0){
+    else if (e.deltaX > 0 || e.deltaY < 0) {
       pageBack()
     }
   }
@@ -168,13 +179,23 @@ export default function Reader() {
         <ul>
           <li>
             <a href='/' onClick={(e) => navigateTo(e, '/')}><button>Home</button></a>
+          </li>
+          <li>
             <button onClick={() => setFontShown(!fontShown)}>Select Font</button>
             {fontShown && <ul>{fontList}</ul>}
+          </li>
+          <li>
+            <button onClick={() => setShowFontSize(!showFontSize)}>Font Size</button>
+            {showFontSize &&
+              <div id='fontSize'>
+                <button onClick={fontSmaller}>&#65293;</button>
+                <button onClick={fontLarger}>&#65291;</button>
+              </div>}
           </li>
         </ul>
       </section>
       <div id='textContainer' onScroll={e => e.target.scrollTo(0, 0)}/* ref={textContainerRef} */>
-        <div id='innerTextContainer' ref={innerTextContainerRef} style={{ columnWidth: dimensions.width, left: left, fontSize: dimensions.width / 14 + 'px', fontFamily: font }}>
+        <div id='innerTextContainer' ref={innerTextContainerRef} style={{ columnWidth: dimensions.width, left: left, fontSize: dimensions.fontSize/* dimensions.width / 14 + 'px' */, fontFamily: font }}>
           <div id='text' ref={textRef}>{text}</div>
         </div>
       </div>

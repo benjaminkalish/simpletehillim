@@ -150,3 +150,24 @@ li ul button {
 /* li ul li {
     height: 100%;
 } */
+
+#fontSize {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap:20px;
+    margin-top: 10px;
+}
+
+#fontSize button {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: #fdfbf7 3px solid;
+    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 28px;
+}
