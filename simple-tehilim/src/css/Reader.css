@@ -30,20 +30,21 @@
     text-align: justify;
     direction: rtl;
     /* font-size: xxx-large; */
-    /* overflow-y: visible; */
+    overflow-y: visible;
     /* font-family: Frank-Ruhl; */
     /* font-family: Stam; */
     /* font-family: David; */
     /* columns: 672px auto; */
     /* font-family: Verdana; */
-    font-family: 'Times New Roman', Times, serif;
-    column-count: auto;
+    /* font-family: 'Times New Roman', Times, serif; */
+    /* column-count: auto; */
     /* column-width: 672px; */
-    column-gap: 0;
-    height: 100%;
-    position: relative;
+    /* column-gap: 0; */
+    /* height: 100%; */
+    /* position: relative; */
     /* overflow-x: hidden; */
-    min-width: fit-content;
+    /* min-width: fit-content; */
+    font-size: 12vh !important;
 }
 
 #text {
