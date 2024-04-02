@@ -30,6 +30,8 @@ export default function Reader() {
       e.target.parentElement.childNodes[1].className = ''
       menuButtonText.current = openSymbol
       setFontShown(false)
+      setShowFontSize(false)
+      e.target.blur()
     }
     else {
       e.target.parentElement.childNodes[1].className = 'slideOpen'
@@ -63,7 +65,7 @@ export default function Reader() {
   }
 
   const [fontShown, setFontShown] = useState(false)
-  const [font, setFont] = useState(fonts.times)
+  const [font, setFont] = useState(fonts.stam)
 
   const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
@@ -116,6 +118,7 @@ export default function Reader() {
   const pagesTurned = useRef(0)
 
   const pageForward = useCallback(() => {
+    // console.log('forward')
     if (left < textRef.current.offsetWidth - dimensions.width) {
       setLeft(left + dimensions.width)
       pagesTurned.current = pagesTurned.current + 1
@@ -124,14 +127,14 @@ export default function Reader() {
 
   const pageBack = useCallback(() => {
     if (pagesTurned.current > 0) {
-      setLeft(left - dimensions.width)
       pagesTurned.current = pagesTurned.current - 1
+      setLeft(left - dimensions.width)
     }
   }, [dimensions.width, left])
 
   useEffect(() => {
     function handleKeyDown(e) {
-      console.log(e.code)
+      // console.log(e.code)
       if (e.code === 'Enter'
         || e.code === 'Space'
         || e.code === 'ArrowLeft'
