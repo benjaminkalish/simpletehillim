@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router-dom'
-import { gematriya } from '@hebcal/core';
+// import { gematriya } from '@hebcal/core';
 import '../css/Reader.css'
-import { useRef, useState, useLayoutEffect, useEffect, useCallback } from 'react';
+import { useRef, useState/* , useLayoutEffect, useEffect, useCallback */ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Text from './Text';
 // import useGetElementDimensions from '../useGetElementDimensions';
@@ -12,9 +12,9 @@ export default function Reader() {
   // const text = data.map((datum, i) => <div className='perek' key={i}><h2 className='perekHeading'>{perekName(datum.perek)}</h2><p>{datum.text.join('  ')}</p></div>)
 
   // console.log(testText)
-  function perekName(n) {
+  /* function perekName(n) {
     return `פרק ${gematriya(n).replaceAll('׳', '')}`
-  }
+  } */
   const openSymbol = '☰'
   const closeSymbol = '\u{2715}'
   const menuButtonText = useRef(openSymbol)
@@ -66,7 +66,7 @@ export default function Reader() {
   // const foo = useGetElementDimensions(innerTextContainerRef.current)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0, fontSize: 0 })
 
-  const [left, setLeft] = useState(0)
+  // const [left, setLeft] = useState(0)
 
   const [showFontSize, setShowFontSize] = useState(false)
 

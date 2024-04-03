@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { gematriya } from '@hebcal/core';
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
+// import { gematriya } from '@hebcal/core';
 
 export default function Text(props) {
     const [visibleText, setVisibleText] = useState([0, 0])
@@ -10,50 +10,62 @@ export default function Text(props) {
     const bottomIndex = useRef(0)
 
     // const text = props.text.map((datum, i) => <div className='perek' key={i}><h2 className='perekHeading'>{perekName(datum.perek)}</h2><p>{datum.text.join('  ')}</p></div>)
-    function perekName(n) {
+    /* function perekName(n) {
         return `פרק ${gematriya(n).replaceAll('׳', '')}`
-    }
+    } */
     const testText = props.text.map((datum) => datum.text.join(' ')).join(' ').split(' ')
     const didMount = useRef(false)
     //   const textRef = useRef()
     //   const [foo, setFoo] = useState(0)
 
-    useEffect(() => {
+    const layoutInitialize = useCallback(() => {
         bottomIndex.current = 70
         setVisibleText([topIndex.current, bottomIndex.current])
     }, [])
 
     useEffect(() => {
-        console.log('first')
+        layoutInitialize()
+    }, [layoutInitialize])
+
+    const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
             return
         }
-console.log('second')
         if (!innerTextContainerRef || !textContainerRef) {
             return
         }
-console.log('third')
-        if (textContainerRef.current.clientHeight < innerTextContainerRef.current.clientHeight) {
-            console.log('in')
+        console.log(innerTextContainerRef.current)
+
+        if (isRoom.current && textContainerRef.current.clientHeight < innerTextContainerRef.current.clientHeight) {
             bottomIndex.current = bottomIndex.current - 2
             setVisibleText([topIndex.current, bottomIndex.current])
         }
-        /* if (textContainerRef.current.clientHeight > innerTextContainerRef.current.clientHeight
-            && index.current < testText.length
-            && isRoom.current) {
-            setVisibleText(testText.slice(0, index.current).join(' '))
-            index.current = index.current + 1
+
+    }, [])
+
+    useEffect(() => {
+        layoutRecalculate()
+    }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
+
+    useLayoutEffect(() => {
+        function clickHandler(e) {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SECTION' || e.target.tagName === 'UL' || e.target.tagName === 'LI') {
+                return
+            }
+            if(bottomIndex.current >= testText.length){
+                return
+            }
+            topIndex.current = bottomIndex.current
+            bottomIndex.current = bottomIndex.current + 70
+            setVisibleText([topIndex.current, bottomIndex.current])
         }
-        else if (isRoom.current){
-            console.log('here')
-            isRoom.current = false
-            let oneLess = index.current - 2
-            setVisibleText(testText.slice(0, oneLess).join(' '))
-            index.current = oneLess
-            console.log(testText[oneLess])
-        } */
-    }, [visibleText, textContainerRef, innerTextContainerRef])
+
+
+        window.addEventListener('resize', layoutInitialize)
+        window.addEventListener('click', clickHandler)
+        return () => window.removeEventListener('resize', layoutInitialize)
+    }, [layoutInitialize])
 
     return (
         <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>

@@ -44,8 +44,11 @@
     /* position: relative; */
     /* overflow-x: hidden; */
     /* min-width: fit-content; */
-    font-size: 10vh;
+    font-size: 5vw;
     text-align-last: justify;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #text {
