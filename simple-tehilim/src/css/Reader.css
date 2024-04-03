@@ -32,7 +32,7 @@
     /* font-size: xxx-large; */
     overflow-y: visible;
     /* font-family: Frank-Ruhl; */
-    /* font-family: Stam; */
+    font-family: Stam;
     /* font-family: David; */
     /* columns: 672px auto; */
     /* font-family: Verdana; */
@@ -59,8 +59,10 @@
     user-select: none;
 }
 
-.perek h2 {
+#innerTextContainer h2 {
     margin: 0;
+    text-align: right;
+    width: fit-content;
 }
 
 .perek p {
