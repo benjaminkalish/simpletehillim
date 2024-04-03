@@ -44,7 +44,8 @@
     /* position: relative; */
     /* overflow-x: hidden; */
     /* min-width: fit-content; */
-    font-size: 12vh !important;
+    font-size: 10vh;
+    text-align-last: justify;
 }
 
 #text {
