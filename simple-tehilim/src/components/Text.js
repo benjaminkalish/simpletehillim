@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { gematriya } from '@hebcal/core';
 
-export default function Text({text}) {
+export default function Text({text, font}) {
     const [visibleText, setVisibleText] = useState([0, 0])
     const textContainerRef = useRef()
     const innerTextContainerRef = useRef()
@@ -14,7 +14,7 @@ export default function Text({text}) {
         return `פרק ${gematriya(n).replaceAll('׳', '')}`
     }
     // const testText = text.map((datum) => datum.text.join(' ')).join(' ').split(' ')
-    const testText = text.flatMap(datum => [<h2 className='perekHeading'>{perekName(datum.perek)}</h2>].concat(datum.text.join(' ').split(' '))).map(x => typeof(x) === 'string' ? x + ' ' : x)
+    const testText = text.flatMap(datum => [<h2 className='perekHeading'>{perekName(datum.perek)}</h2>].concat(datum.text.join(' ').split(' ').map(x => x + ' ')))/* .map(x => typeof(x) === 'string' ? x + ' ' : x) */
     // const testText = text.map(datum => <div>datum.perek</div>)
 
 
@@ -49,7 +49,7 @@ export default function Text({text}) {
 
     useEffect(() => {
         layoutRecalculate()
-    }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
+    }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate, font])
 
     useLayoutEffect(() => {
         function clickHandler(e) {
@@ -72,7 +72,7 @@ export default function Text({text}) {
 
     return (
         <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
-            <div id='innerTextContainer' ref={innerTextContainerRef} style={{ /* columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px' , *//* fontFamily: font */ }}>
+            <div id='innerTextContainer' ref={innerTextContainerRef} style={{ /* columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px' , */ fontFamily: font }}>
                 {testText.slice(visibleText[0], visibleText[1])}
             </div>
         </div>

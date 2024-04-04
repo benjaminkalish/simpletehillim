@@ -54,12 +54,12 @@ export default function Reader() {
   const fonts = {
     times: '\'Times New Roman\', Times, serif',
     david: 'David',
-    frank_ruhl: 'Frank-Ruhl',
+    /* frank_ruhl: 'Frank-Ruhl', */
     stam: 'Stam'
   }
 
   const [fontShown, setFontShown] = useState(false)
-  const [font, setFont] = useState(fonts.stam)
+  const [font, setFont] = useState(fonts.times)
 
   const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
@@ -191,7 +191,7 @@ export default function Reader() {
             </li>
           </ul>
         </section>
-        <Text text={useLoaderData()} />
+        <Text text={useLoaderData()} font={font} />
       </div>
     )
 }
