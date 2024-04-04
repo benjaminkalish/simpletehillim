@@ -44,7 +44,7 @@
     /* position: relative; */
     /* overflow-x: hidden; */
     /* min-width: fit-content; */
-    font-size: 4vw;
+    font-size: 3.5vw;
     text-align-last: justify;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -69,14 +69,27 @@
     margin: 0px;
 }
 
+
+
 #readerContainer {
     display: grid;
-    grid-template-rows: 10px 50px 1fr 10px;
+    grid-template-rows: 10px 50px 1fr;
     grid-template-columns: 10px 50px 1fr 20px 3fr 20px 1fr 60px;
     background-color: #fdfbf7;
     height: 100%;
     width: 100%;
     margin: 0;
+}
+
+@media screen and (max-width: 500px) {
+    #textContainer {
+        grid-column: 3 / 8;
+    }
+
+    #innerTextContainer {
+        font-size: 3.5vh;
+    }
+
 }
 
 #menuButton {

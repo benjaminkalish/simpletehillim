@@ -33,7 +33,7 @@ export default function Reader() {
       e.target.parentElement.childNodes[1].className = ''
       menuButtonText.current = openSymbol
       setFontShown(false)
-      setShowFontSize(false)
+      // setShowFontSize(false)
       e.target.blur()
     }
     else {
@@ -64,19 +64,19 @@ export default function Reader() {
   const fontList = Object.entries(fonts).map(x => <li> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
   // const foo = useGetElementDimensions(innerTextContainerRef.current)
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0, fontSize: 0 })
+  // const [dimensions, setDimensions] = useState({ width: 0, height: 0, fontSize: 0 })
 
   // const [left, setLeft] = useState(0)
 
-  const [showFontSize, setShowFontSize] = useState(false)
+  // const [showFontSize, setShowFontSize] = useState(false)
 
-  function fontLarger() {
+  /* function fontLarger() {
     setDimensions({ ...dimensions, fontSize: dimensions.fontSize * 1.05 })
   }
 
   function fontSmaller() {
     setDimensions({ ...dimensions, fontSize: dimensions.fontSize * 0.95 })
-  }
+  } */
 
   // useLayoutEffect(() => {
 
@@ -181,14 +181,14 @@ export default function Reader() {
               <button onClick={() => setFontShown(!fontShown)}>Select Font</button>
               {fontShown && <ul>{fontList}</ul>}
             </li>
-            <li>
+            {/* <li>
               <button onClick={() => setShowFontSize(!showFontSize)}>Font Size</button>
               {showFontSize &&
                 <div id='fontSize'>
                   <button onClick={fontSmaller}>&#65293;</button>
                   <button onClick={fontLarger}>&#65291;</button>
                 </div>}
-            </li>
+            </li> */}
           </ul>
         </section>
         <Text text={useLoaderData()} font={font} />
