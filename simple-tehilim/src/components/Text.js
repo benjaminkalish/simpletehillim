@@ -11,7 +11,8 @@ export default function Text({ text, font }) {
     function perekName(n) {
         return `פרק ${gematriya(n).replaceAll('׳', '')}`
     }
-    const testText = useRef(
+
+    const [displayText, setDisplayText] = useState(
         text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
             .concat(datum.text.join(' ').split(' ').map(x => x + ' ')))/* .map(x => typeof(x) === 'string' ? x + ' ' : x) */
     )
@@ -45,7 +46,7 @@ export default function Text({ text, font }) {
 
     useLayoutEffect(() => {
         function pageForward() {
-            if (bottomIndex.current >= testText.current.length) {
+            if (bottomIndex.current >= displayText.length) {
                 return
             }
             topIndex.current = bottomIndex.current
@@ -93,12 +94,12 @@ export default function Text({ text, font }) {
             window.removeEventListener('resize', layoutInitialize)
             window.removeEventListener('click', clickHandler)
         }
-    }, [layoutInitialize])
+    }, [displayText.length, layoutInitialize])
 
     return (
         <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
             <div id='innerTextContainer' ref={innerTextContainerRef} style={{ fontFamily: font/*, columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px'*/ }}>
-                {testText.current.slice(visibleText[0], visibleText[1])}
+                {displayText.slice(visibleText[0], visibleText[1])}
             </div>
         </div>
     )
