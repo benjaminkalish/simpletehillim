@@ -4,6 +4,8 @@ import '../css/Reader.css'
 import { useRef, useState/* , useLayoutEffect, useEffect, useCallback */ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Text from './Text';
+import TrippleText from './TrippleText';
+
 // import useGetElementDimensions from '../useGetElementDimensions';
 
 export default function Reader() {
@@ -191,7 +193,8 @@ export default function Reader() {
             </li> */}
           </ul>
         </section>
-        <Text text={useLoaderData()} font={font} />
+        {/* <Text text={useLoaderData()} font={font} /> */}
+        <TrippleText text={useLoaderData()} font={font} />
       </div>
     )
 }
