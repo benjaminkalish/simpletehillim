@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { gematriya } from '@hebcal/core';
+import PropTypes from 'prop-types';
 
 export default function TrippleText({ text, font }) {
     const [totalText, setTotalText] = useState(
@@ -71,7 +72,6 @@ export default function TrippleText({ text, font }) {
             < element.current.clientHeight) {
             bottom2.current = bottom2.current - 2
             bottom3.current = bottom2.current + maxWords
-            console.log(text3())
             setVisibleText({ ...visibleText, bText: text2(), cText: text3() })
         }
         else {
@@ -210,4 +210,15 @@ export default function TrippleText({ text, font }) {
             </div>
         </div>
     )
+}
+
+TrippleText.propTypes = {
+    text: PropTypes.arrayOf(PropTypes.shape({
+        dayMonth: PropTypes.number,
+        dayWeek: PropTypes.number,
+        perek: PropTypes.number,
+        sefer: PropTypes.number,
+        text: PropTypes.arrayOf(PropTypes.string)
+    })),
+    font: PropTypes.string
 }
