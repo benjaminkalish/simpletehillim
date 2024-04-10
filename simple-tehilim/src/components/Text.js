@@ -18,7 +18,7 @@ export default function Text({ text, font }) {
     )
 
     const didMount = useRef(false)
-    const maxWords = 1000
+    const maxWords = 80
     const layoutInitialize = useCallback(() => {
         bottomIndex.current = maxWords + topIndex.current
         setVisibleText([topIndex.current, bottomIndex.current])
@@ -28,7 +28,7 @@ export default function Text({ text, font }) {
         layoutInitialize()
     }, [layoutInitialize, font])
 
-    const interval = useRef(Math.ceil(maxWords / 2))
+    const interval = useRef(maxWords)
     const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
@@ -36,21 +36,21 @@ export default function Text({ text, font }) {
         }
         if (textContainerRef.current.clientHeight
             < innerTextContainerRef.current.clientHeight) {
-            bottomIndex.current = bottomIndex.current - interval.current
             interval.current = Math.ceil(interval.current / 2)
+            bottomIndex.current = bottomIndex.current - interval.current
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else if (textContainerRef.current.clientHeight
-            > innerTextContainerRef.current.clientHeight && interval.current > 1){
+            > innerTextContainerRef.current.clientHeight && interval.current > 1) {
             bottomIndex.current = bottomIndex.current + interval.current
-            interval.current = Math.ceil(interval.current / 2)
+            // interval.current = Math.ceil(interval.current / 2)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
-        else{
-            interval.current = Math.ceil(maxWords / 2)
+        else {
+            interval.current = maxWords
         }
     }, [])
-console.log('hi')
+    console.log('hi')
     useEffect(() => {
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
