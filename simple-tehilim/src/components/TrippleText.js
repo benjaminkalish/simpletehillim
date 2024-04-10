@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { gematriya } from '@hebcal/core';
 import PropTypes from 'prop-types';
+import '../css/TrippleText.css'
 
 export default function TrippleText({ text, font }) {
     const [totalText, setTotalText] = useState(
