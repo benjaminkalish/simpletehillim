@@ -193,8 +193,8 @@ export default function Reader() {
             </li> */}
           </ul>
         </section>
-        {/* <Text text={useLoaderData()} font={font} /> */}
-        <TrippleText text={useLoaderData()} font={font} />
+        <Text text={useLoaderData()} font={font} />
+        {/* <TrippleText text={useLoaderData()} font={font} /> */}
       </div>
     )
 }

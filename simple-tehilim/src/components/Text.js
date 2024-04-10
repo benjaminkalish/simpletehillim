@@ -18,9 +18,9 @@ export default function Text({ text, font }) {
     )
 
     const didMount = useRef(false)
-
+    const maxWords = 1000
     const layoutInitialize = useCallback(() => {
-        bottomIndex.current = 120 + topIndex.current
+        bottomIndex.current = maxWords + topIndex.current
         setVisibleText([topIndex.current, bottomIndex.current])
     }, [])
 
@@ -28,6 +28,7 @@ export default function Text({ text, font }) {
         layoutInitialize()
     }, [layoutInitialize, font])
 
+    const interval = useRef(Math.ceil(maxWords / 2))
     const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
@@ -35,11 +36,21 @@ export default function Text({ text, font }) {
         }
         if (textContainerRef.current.clientHeight
             < innerTextContainerRef.current.clientHeight) {
-            bottomIndex.current = bottomIndex.current - 2
+            bottomIndex.current = bottomIndex.current - interval.current
+            interval.current = Math.ceil(interval.current / 2)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
+        else if (textContainerRef.current.clientHeight
+            > innerTextContainerRef.current.clientHeight && interval.current > 1){
+            bottomIndex.current = bottomIndex.current + interval.current
+            interval.current = Math.ceil(interval.current / 2)
+            setVisibleText([topIndex.current, bottomIndex.current])
+        }
+        else{
+            interval.current = Math.ceil(maxWords / 2)
+        }
     }, [])
-
+console.log('hi')
     useEffect(() => {
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
@@ -50,7 +61,7 @@ export default function Text({ text, font }) {
                 return
             }
             topIndex.current = bottomIndex.current
-            bottomIndex.current = bottomIndex.current + 120
+            bottomIndex.current = bottomIndex.current + maxWords
             setVisibleText([topIndex.current, bottomIndex.current])
         }
 
