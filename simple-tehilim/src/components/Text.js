@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { gematriya } from '@hebcal/core';
+import '../css/Text.css'
+import { flushSync } from 'react-dom';
 
 export default function Text({ text, font }) {
     const [visibleText, setVisibleText] = useState([0, 0])
+    const [opacity, setOpacity] = useState()
     const textContainerRef = useRef()
     const innerTextContainerRef = useRef()
     const topIndex = useRef(0)
@@ -12,23 +15,25 @@ export default function Text({ text, font }) {
         return `פרק ${gematriya(n).replaceAll('׳', '')}`
     }
 
-    const [displayText, setDisplayText] = useState(
+    const [displayText, /* setDisplayText */] = useState(
         text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
             .concat(datum.text.join(' ').split(' ').map(x => x + ' ')))/* .map(x => typeof(x) === 'string' ? x + ' ' : x) */
     )
 
     const didMount = useRef(false)
-    const maxWords = 80
+    const maxWords = 60
     const layoutInitialize = useCallback(() => {
         bottomIndex.current = maxWords + topIndex.current
         setVisibleText([topIndex.current, bottomIndex.current])
     }, [])
 
     useEffect(() => {
+        flushSync(() => setOpacity(0))
         layoutInitialize()
     }, [layoutInitialize, font])
 
-    const interval = useRef(maxWords)
+    const initialInterval = maxWords / 6
+    const interval = useRef(initialInterval)
     const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
@@ -47,7 +52,8 @@ export default function Text({ text, font }) {
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else {
-            interval.current = maxWords
+            interval.current = initialInterval
+            setOpacity(1)
         }
     }, [])
     console.log('hi')
@@ -60,6 +66,7 @@ export default function Text({ text, font }) {
             if (bottomIndex.current >= displayText.length) {
                 return
             }
+            setOpacity(0)
             topIndex.current = bottomIndex.current
             bottomIndex.current = bottomIndex.current + maxWords
             setVisibleText([topIndex.current, bottomIndex.current])
@@ -109,7 +116,7 @@ export default function Text({ text, font }) {
 
     return (
         <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
-            <div id='innerTextContainer' ref={innerTextContainerRef} style={{ fontFamily: font/*, columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px'*/ }}>
+            <div id='innerTextContainer' ref={innerTextContainerRef} style={{ opacity: opacity, fontFamily: font/*, columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px'*/ }}>
                 {displayText.slice(visibleText[0], visibleText[1])}
             </div>
         </div>

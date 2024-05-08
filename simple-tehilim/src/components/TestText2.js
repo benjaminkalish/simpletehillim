@@ -3,7 +3,7 @@ import { gematriya } from '@hebcal/core';
 import PropTypes from 'prop-types';
 import '../css/TrippleText.css'
 
-export default function TrippleText({ text, font }) {
+export default function TestText2({ text, font }) {
     const [fullText/* , setFullText */] = useState(
         text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
             .concat(datum.text.join(' ').split(' ').map(x => x + ' ')))/* .map(x => typeof(x) === 'string' ? x + ' ' : x) */
@@ -99,7 +99,7 @@ export default function TrippleText({ text, font }) {
         }
     }, [setPage2]) */
 
-    const interval = useRef(maxWords)
+    const interval = useRef(maxWords / 3)
 
     const setTextLayout = useCallback((container, bottomIndexRef, boolRef) => {
         if (textContainerRef.current.clientHeight
@@ -279,7 +279,7 @@ export default function TrippleText({ text, font }) {
     )
 }
 
-TrippleText.propTypes = {
+TestText2.propTypes = {
     text: PropTypes.arrayOf(PropTypes.shape({
         dayMonth: PropTypes.number,
         dayWeek: PropTypes.number,
