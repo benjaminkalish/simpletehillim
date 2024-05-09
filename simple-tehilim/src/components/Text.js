@@ -34,6 +34,7 @@ export default function Text({ text, font }) {
 
     const initialInterval = maxWords / 6
     const interval = useRef(initialInterval)
+    const topDown = useRef(true)
     const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
@@ -42,17 +43,23 @@ export default function Text({ text, font }) {
         if (textContainerRef.current.clientHeight
             < innerTextContainerRef.current.clientHeight) {
             interval.current = Math.ceil(interval.current / 2)
-            bottomIndex.current = bottomIndex.current - interval.current
+            topDown ? 
+                bottomIndex.current = bottomIndex.current - interval.current
+                : topIndex.current = topIndex.current - interval.current
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else if (textContainerRef.current.clientHeight
-            > innerTextContainerRef.current.clientHeight && interval.current > 1) {
-            bottomIndex.current = bottomIndex.current + interval.current
+            > innerTextContainerRef.current.clientHeight && interval.current > 1 
+            && bottomIndex.current < displayText.length) {
+            topDown ? 
+                bottomIndex.current = bottomIndex.current + interval.current
+                : topIndex.current = topIndex.current + interval.current
             // interval.current = Math.ceil(interval.current / 2)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else {
             interval.current = initialInterval
+            topDown.current = true
             setOpacity(1)
         }
     }, [])
@@ -63,17 +70,21 @@ export default function Text({ text, font }) {
 
     useLayoutEffect(() => {
         function pageForward() {
+            console.log(bottomIndex.current, displayText.length)
             if (bottomIndex.current >= displayText.length) {
                 return
             }
             setOpacity(0)
             topIndex.current = bottomIndex.current
-            bottomIndex.current = bottomIndex.current + maxWords
+            bottomIndex.current = bottomIndex.current + Math.min(maxWords, displayText.length - bottomIndex.current)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
 
         function pageBack() {
-
+            topDown.current = false
+            bottomIndex.current = topIndex.current
+            topIndex.current = bottomIndex.current - maxWords
+            setVisibleText([topIndex.current, bottomIndex.current])
         }
 
         function isWrongClickTarget(e) {
