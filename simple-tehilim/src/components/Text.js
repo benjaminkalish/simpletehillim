@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { gematriya } from '@hebcal/core';
 import '../css/Text.css'
-import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom';
 
 export default function Text({ text, font }) {
     const [visibleText, setVisibleText] = useState([0, 0])
@@ -28,7 +28,8 @@ export default function Text({ text, font }) {
     }, [])
 
     useEffect(() => {
-        flushSync(() => setOpacity(0))
+        // flushSync(() => setOpacity(0))
+        setOpacity(0)
         layoutInitialize()
     }, [layoutInitialize, font])
 
@@ -43,17 +44,21 @@ export default function Text({ text, font }) {
         if (textContainerRef.current.clientHeight
             < innerTextContainerRef.current.clientHeight) {
             interval.current = Math.ceil(interval.current / 2)
-            topDown ? 
+            topDown.current ?
                 bottomIndex.current = bottomIndex.current - interval.current
-                : topIndex.current = topIndex.current - interval.current
+                : topIndex.current = topIndex.current + interval.current
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else if (textContainerRef.current.clientHeight
-            > innerTextContainerRef.current.clientHeight && interval.current > 1 
+            > innerTextContainerRef.current.clientHeight && interval.current > 1
             && bottomIndex.current < displayText.length) {
-            topDown ? 
+            // topIndex.current === 0 && topDown.current = true
+            if (topIndex.current === 0) {
+                topDown.current = true
+            }
+            topDown.current ?
                 bottomIndex.current = bottomIndex.current + interval.current
-                : topIndex.current = topIndex.current + interval.current
+                : topIndex.current = Math.max(topIndex.current - interval.current, 0)
             // interval.current = Math.ceil(interval.current / 2)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
@@ -62,15 +67,16 @@ export default function Text({ text, font }) {
             topDown.current = true
             setOpacity(1)
         }
-    }, [])
-    console.log('hi')
+        // console.log(topIndex.current, bottomIndex.current, topDown.current)
+    }, [displayText.length, initialInterval])
+    // console.log('hi')
     useEffect(() => {
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
 
     useLayoutEffect(() => {
         function pageForward() {
-            console.log(bottomIndex.current, displayText.length)
+            // console.log(bottomIndex.current, displayText.length)
             if (bottomIndex.current >= displayText.length) {
                 return
             }
@@ -81,9 +87,13 @@ export default function Text({ text, font }) {
         }
 
         function pageBack() {
+            if (topIndex.current === 0) {
+                return
+            }
+            setOpacity(0)
             topDown.current = false
             bottomIndex.current = topIndex.current
-            topIndex.current = bottomIndex.current - maxWords
+            topIndex.current = Math.max(bottomIndex.current - maxWords, 0)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
 
@@ -124,7 +134,7 @@ export default function Text({ text, font }) {
             window.removeEventListener('click', clickHandler)
         }
     }, [displayText.length, layoutInitialize])
-
+ console.log(innerTextContainerRef.current && innerTextContainerRef.current.style.fontSize)
     return (
         <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
             <div id='innerTextContainer' ref={innerTextContainerRef} style={{ opacity: opacity, fontFamily: font/*, columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px'*/ }}>

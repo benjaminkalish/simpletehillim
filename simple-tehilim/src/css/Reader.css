@@ -109,3 +109,10 @@ li ul button {
     align-items: center;
     padding-bottom: 28px;
 }
+
+@media screen and (max-width: 500px) {
+    #fontSize {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
