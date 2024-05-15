@@ -3,7 +3,7 @@ import { gematriya } from '@hebcal/core';
 import '../css/Text.css'
 // import { flushSync } from 'react-dom';
 
-export default function Text({ text, font }) {
+export default function Text({ text, font, fontSizeCoefficient }) {
     const [visibleText, setVisibleText] = useState([0, 0])
     const [opacity, setOpacity] = useState()
     const textContainerRef = useRef()
@@ -31,7 +31,7 @@ export default function Text({ text, font }) {
         // flushSync(() => setOpacity(0))
         setOpacity(0)
         layoutInitialize()
-    }, [layoutInitialize, font])
+    }, [layoutInitialize, font, fontSizeCoefficient])
 
     const initialInterval = maxWords / 6
     const interval = useRef(initialInterval)
@@ -74,29 +74,29 @@ export default function Text({ text, font }) {
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
 
+    const pageForward = useCallback(() => {
+        // console.log(bottomIndex.current, displayText.length)
+        if (bottomIndex.current >= displayText.length) {
+            return
+        }
+        setOpacity(0)
+        topIndex.current = bottomIndex.current
+        bottomIndex.current = bottomIndex.current + Math.min(maxWords, displayText.length - bottomIndex.current)
+        setVisibleText([topIndex.current, bottomIndex.current])
+    }, [displayText.length])
+
+    const pageBack = useCallback(() => {
+        if (topIndex.current === 0) {
+            return
+        }
+        setOpacity(0)
+        topDown.current = false
+        bottomIndex.current = topIndex.current
+        topIndex.current = Math.max(bottomIndex.current - maxWords, 0)
+        setVisibleText([topIndex.current, bottomIndex.current])
+    }, [])
+
     useLayoutEffect(() => {
-        function pageForward() {
-            // console.log(bottomIndex.current, displayText.length)
-            if (bottomIndex.current >= displayText.length) {
-                return
-            }
-            setOpacity(0)
-            topIndex.current = bottomIndex.current
-            bottomIndex.current = bottomIndex.current + Math.min(maxWords, displayText.length - bottomIndex.current)
-            setVisibleText([topIndex.current, bottomIndex.current])
-        }
-
-        function pageBack() {
-            if (topIndex.current === 0) {
-                return
-            }
-            setOpacity(0)
-            topDown.current = false
-            bottomIndex.current = topIndex.current
-            topIndex.current = Math.max(bottomIndex.current - maxWords, 0)
-            setVisibleText([topIndex.current, bottomIndex.current])
-        }
-
         function isWrongClickTarget(e) {
             return e.target.tagName === 'BUTTON'
                 || e.target.tagName === 'SECTION'
@@ -133,11 +133,38 @@ export default function Text({ text, font }) {
             window.removeEventListener('resize', layoutInitialize)
             window.removeEventListener('click', clickHandler)
         }
-    }, [displayText.length, layoutInitialize])
- console.log(innerTextContainerRef.current && innerTextContainerRef.current.style.fontSize)
+    }, [displayText.length, layoutInitialize, pageBack, pageForward])
+
+    function onWheelHandler(e){
+        if(e.deltaX < 0 || e.deltaY > 0){
+          pageForward()
+        }
+        else if (e.deltaX > 0 || e.deltaY < 0){
+          pageBack()
+        }
+      }
+
+    let defaultFontSize
+    let fontUnit
+
+    if (window.innerWidth > 500) {
+        defaultFontSize = 3.5
+        fontUnit = 'vw'
+    }
+    else {
+        defaultFontSize = 4
+        fontUnit = 'vh'
+    }
+
+    const innerTextContainerStyle = {
+        opacity: opacity,
+        fontFamily: font,
+        fontSize: defaultFontSize * fontSizeCoefficient + fontUnit
+    }
+
     return (
-        <div id='textContainer' /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
-            <div id='innerTextContainer' ref={innerTextContainerRef} style={{ opacity: opacity, fontFamily: font/*, columnWidth: dimensions.width, left: left *//* , fontSize: dimensions.fontSize *//* dimensions.width / 14 + 'px'*/ }}>
+        <div id='textContainer' onWheel={onWheelHandler} /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
+            <div id='innerTextContainer' ref={innerTextContainerRef} style={innerTextContainerStyle}>
                 {displayText.slice(visibleText[0], visibleText[1])}
             </div>
         </div>

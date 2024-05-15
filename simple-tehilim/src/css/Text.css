@@ -26,7 +26,7 @@
     text-align: justify;
     direction: rtl;
     overflow-y: visible;
-    font-size: 3.5vw;
+    /* font-size: 3.5vw; */
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
@@ -45,7 +45,7 @@
         grid-column: 3 / 8;
     }
 
-    #innerTextContainer {
+   /*  #innerTextContainer {
         font-size: 4vh;
-    }
+    } */
 }
