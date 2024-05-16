@@ -1,34 +1,26 @@
-import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
-import { gematriya } from '@hebcal/core';
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, /* useMemo */ } from 'react'
+// import { gematriya } from '@hebcal/core'
 import '../css/Text.css'
-// import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom'
+// import { throttle } from 'lodash'
+// const throttle = require('lodash/throttle')
 
-export default function Text({ text, font, fontSizeCoefficient }) {
+export default function Text({ text, formattedText, font, fontSizeCoefficient }) {
     const [visibleText, setVisibleText] = useState([0, 0])
     const [opacity, setOpacity] = useState()
     const textContainerRef = useRef()
     const innerTextContainerRef = useRef()
     const topIndex = useRef(0)
     const bottomIndex = useRef(0)
-
-    function perekName(n) {
-        return `פרק ${gematriya(n).replaceAll('׳', '')}`
-    }
-
-    const [displayText, /* setDisplayText */] = useState(
-        text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
-            .concat(datum.text.join(' ').split(' ').map(x => x + ' ')))/* .map(x => typeof(x) === 'string' ? x + ' ' : x) */
-    )
-
     const didMount = useRef(false)
     const maxWords = 60
+
     const layoutInitialize = useCallback(() => {
         bottomIndex.current = maxWords + topIndex.current
         setVisibleText([topIndex.current, bottomIndex.current])
     }, [])
 
     useEffect(() => {
-        // flushSync(() => setOpacity(0))
         setOpacity(0)
         layoutInitialize()
     }, [layoutInitialize, font, fontSizeCoefficient])
@@ -51,15 +43,13 @@ export default function Text({ text, font, fontSizeCoefficient }) {
         }
         else if (textContainerRef.current.clientHeight
             > innerTextContainerRef.current.clientHeight && interval.current > 1
-            && bottomIndex.current < displayText.length) {
-            // topIndex.current === 0 && topDown.current = true
+            && bottomIndex.current < formattedText.length) {
             if (topIndex.current === 0) {
                 topDown.current = true
             }
             topDown.current ?
                 bottomIndex.current = bottomIndex.current + interval.current
                 : topIndex.current = Math.max(topIndex.current - interval.current, 0)
-            // interval.current = Math.ceil(interval.current / 2)
             setVisibleText([topIndex.current, bottomIndex.current])
         }
         else {
@@ -67,34 +57,14 @@ export default function Text({ text, font, fontSizeCoefficient }) {
             topDown.current = true
             setOpacity(1)
         }
-        // console.log(topIndex.current, bottomIndex.current, topDown.current)
-    }, [displayText.length, initialInterval])
-    // console.log('hi')
+    }, [formattedText.length, initialInterval])
+
     useEffect(() => {
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
 
-    const pageForward = useCallback(() => {
-        // console.log(bottomIndex.current, displayText.length)
-        if (bottomIndex.current >= displayText.length) {
-            return
-        }
-        setOpacity(0)
-        topIndex.current = bottomIndex.current
-        bottomIndex.current = bottomIndex.current + Math.min(maxWords, displayText.length - bottomIndex.current)
-        setVisibleText([topIndex.current, bottomIndex.current])
-    }, [displayText.length])
 
-    const pageBack = useCallback(() => {
-        if (topIndex.current === 0) {
-            return
-        }
-        setOpacity(0)
-        topDown.current = false
-        bottomIndex.current = topIndex.current
-        topIndex.current = Math.max(bottomIndex.current - maxWords, 0)
-        setVisibleText([topIndex.current, bottomIndex.current])
-    }, [])
+
 
     useLayoutEffect(() => {
         function isWrongClickTarget(e) {
@@ -104,11 +74,40 @@ export default function Text({ text, font, fontSizeCoefficient }) {
                 || e.target.tagName === 'LI'
         }
 
+        function pageForward() {
+            if (bottomIndex.current >= formattedText.length) {
+                return
+            }
+            setOpacity(0)
+            topIndex.current = bottomIndex.current
+            bottomIndex.current = bottomIndex.current + Math.min(maxWords, formattedText.length - bottomIndex.current)
+            setVisibleText([topIndex.current, bottomIndex.current])
+        }
+
+        function pageBack() {
+            if (topIndex.current === 0) {
+                return
+            }
+            setOpacity(0)
+            topDown.current = false
+            bottomIndex.current = topIndex.current
+            topIndex.current = Math.max(bottomIndex.current - maxWords, 0)
+            setVisibleText([topIndex.current, bottomIndex.current])
+        }
+
         function clickHandler(e) {
             if (isWrongClickTarget(e)) {
                 return
             }
             pageForward()
+        }
+
+        function rightClickHandeler(e) {
+            if (isWrongClickTarget(e)) {
+                return
+            }
+            e.preventDefault()
+            pageBack()
         }
 
         function keydownHandler(e) {
@@ -124,25 +123,42 @@ export default function Text({ text, font, fontSizeCoefficient }) {
             }
         }
 
+        let time = Date.now()
+
+        function wheelHandler(e) {
+            if (isWrongClickTarget(e)) {
+                return
+            }
+            let now = Date.now()
+            let deadZone = 3
+            if (time + 250 - now > 0) {
+                return
+            }
+            else if ((e.deltaX < -deadZone || e.deltaY > deadZone)) {
+                pageForward()
+            }
+            else if ((e.deltaX > deadZone || e.deltaY < -deadZone)) {
+                pageBack()
+            }
+            time = now
+        }
+
         window.addEventListener('keydown', keydownHandler)
         window.addEventListener('resize', layoutInitialize)
         window.addEventListener('click', clickHandler)
+        window.addEventListener('contextmenu', rightClickHandeler)
+        window.addEventListener('wheel', wheelHandler)
 
         return () => {
             window.removeEventListener('keydown', keydownHandler)
             window.removeEventListener('resize', layoutInitialize)
             window.removeEventListener('click', clickHandler)
+            window.removeEventListener('contextmenu', rightClickHandeler)
+            window.removeEventListener('wheel', wheelHandler)
         }
-    }, [displayText.length, layoutInitialize, pageBack, pageForward])
+    }, [formattedText.length, layoutInitialize])
 
-    function onWheelHandler(e){
-        if(e.deltaX < 0 || e.deltaY > 0){
-          pageForward()
-        }
-        else if (e.deltaX > 0 || e.deltaY < 0){
-          pageBack()
-        }
-      }
+
 
     let defaultFontSize
     let fontUnit
@@ -163,9 +179,9 @@ export default function Text({ text, font, fontSizeCoefficient }) {
     }
 
     return (
-        <div id='textContainer' onWheel={onWheelHandler} /* onScroll={e => e.target.scrollTo(0, 0)} */ ref={textContainerRef}>
+        <div id='textContainer' ref={textContainerRef}>
             <div id='innerTextContainer' ref={innerTextContainerRef} style={innerTextContainerStyle}>
-                {displayText.slice(visibleText[0], visibleText[1])}
+                {formattedText.slice(visibleText[0], visibleText[1])}
             </div>
         </div>
     )
