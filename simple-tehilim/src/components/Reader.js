@@ -10,8 +10,7 @@ import Text from './Text';
 
 // import useGetElementDimensions from '../useGetElementDimensions';
 
-export default function Reader() {
-
+export default function Reader({ type }) {
   const openSymbol = '☰'
   const closeSymbol = '\u{2715}'
   const menuButtonText = useRef(openSymbol)
@@ -72,8 +71,59 @@ export default function Reader() {
       return `פרק ${gematriya(n).replaceAll('׳', '')}`
     }
 
-    setFormattedText(text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
-      .concat(datum.text.join(' ').split(' ').map(x => x + ' ')))
+    let typeText
+    let isFirst = false
+    let isLast = false
+
+    switch (type) {
+      case 'perek':
+        typeText = 'Perek'
+        if (text[0].perek === 1) {
+          isFirst = true
+        }
+        else if (text[0].perek === 150) {
+          isLast = true
+        }
+        break
+      case 'month':
+        typeText = 'Day'
+        if (text[0].dayMonth === 1) {
+          isFirst = true
+        }
+        else if (text[0].dayMonth === 30) {
+          isLast = true
+        }
+        break
+      case 'week':
+        typeText = 'Day'
+        if (text[0].dayWeek === 1) {
+          isFirst = true
+        }
+        if (text[0].dayWeek === 7) {
+          isLast = true
+        }
+        break
+      case 'sefer':
+        typeText = 'Sefer'
+        if (text[0].sefer === 1) {
+          isFirst = true
+        }
+        if (text[0].sefer === 5) {
+          isLast = true
+        }
+        break
+      default:
+        typeText = undefined
+        isFirst = true
+        isLast = true
+        break
+    }
+
+    const prevButton = !isFirst && <button key='prev'>Previous {typeText}</button>
+    const nextButton = !isLast && <button key='next'>Next {typeText}</button>
+
+    setFormattedText([prevButton, text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
+      .concat(datum.text.join(' ').split(' ').map(x => x + ' '))), nextButton].flat()
     )
   }, [text])
 

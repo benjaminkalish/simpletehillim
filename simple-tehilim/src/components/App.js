@@ -6,10 +6,10 @@ import { Outlet, Route, createBrowserRouter, createRoutesFromElements, Navigate,
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<>{<Outlet />}</>}>
     <Route index element={<Main />} />
-    <Route path='/perek/:id' element={<Reader />} loader={({params}) => loader(`/perek/${params.id}`)}/>
-    <Route path='/month/:id' element={<Reader />} loader={({params}) => loader(`/month/${params.id}`)}/>
-    <Route path='/week/:id' element={<Reader />} loader={({params}) => loader(`/week/${params.id}`)}/>
-    <Route path='/sefer/:id' element={<Reader />} loader={({params}) => loader(`/sefer/${params.id}`)}/>
+    <Route path='/perek/:id' element={<Reader type={'perek'}/>} loader={({params}) => loader(`/perek/${params.id}`)}/>
+    <Route path='/month/:id' element={<Reader type={'month'}/>} loader={({params}) => loader(`/month/${params.id}`)}/>
+    <Route path='/week/:id' element={<Reader type={'week'}/>} loader={({params}) => loader(`/week/${params.id}`)}/>
+    <Route path='/sefer/:id' element={<Reader type={'sefer'}/>} loader={({params}) => loader(`/sefer/${params.id}`)}/>
     <Route path="*" element={<Navigate to="/" replace="true" />} />
   </Route>
 ))
