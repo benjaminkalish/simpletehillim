@@ -32,6 +32,8 @@
     user-select: none;
     background-color: #fdfbf7;
     text-align-last: justify;
+    display: flex;
+    flex-direction: column;
 }
 
 #innerTextContainer h2 {
@@ -40,12 +42,23 @@
     width: fit-content;
 }
 
+.navButton {
+    text-align-last: center;
+    width: fit-content;
+    align-self: center;
+    background-color: #fdfbf7;
+}
+
+.navButton:hover {
+    background-color: beige;
+}
+
 @media screen and (max-width: 500px) {
     #textContainer {
         grid-column: 3 / 8;
     }
 
-   /*  #innerTextContainer {
+    /*  #innerTextContainer {
         font-size: 4vh;
     } */
 }

@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect, useLayoutEffect, useCallback, /* useMemo */ } from 'react'
-// import { gematriya } from '@hebcal/core'
+import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import '../css/Text.css'
 // import { flushSync } from 'react-dom'
 // import { throttle } from 'lodash'
 // const throttle = require('lodash/throttle')
 
-export default function Text({ text, formattedText, font, fontSizeCoefficient }) {
+export default function Text({ formattedText, font, fontSizeCoefficient }) {
     const [visibleText, setVisibleText] = useState([0, 0])
     const [opacity, setOpacity] = useState()
     const textContainerRef = useRef()
@@ -21,6 +20,12 @@ export default function Text({ text, formattedText, font, fontSizeCoefficient })
     }, [])
 
     useEffect(() => {
+        topIndex.current = 0
+        setOpacity(0)
+        layoutInitialize()
+    }, [formattedText, layoutInitialize])
+
+    useEffect(() => {
         setOpacity(0)
         layoutInitialize()
     }, [layoutInitialize, font, fontSizeCoefficient])
@@ -28,6 +33,7 @@ export default function Text({ text, formattedText, font, fontSizeCoefficient })
     const initialInterval = maxWords / 6
     const interval = useRef(initialInterval)
     const topDown = useRef(true)
+
     const layoutRecalculate = useCallback(() => {
         if (!didMount.current) {
             didMount.current = true
@@ -63,10 +69,7 @@ export default function Text({ text, formattedText, font, fontSizeCoefficient })
         layoutRecalculate()
     }, [visibleText, textContainerRef, innerTextContainerRef, layoutRecalculate])
 
-
-
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         function isWrongClickTarget(e) {
             return e.target.tagName === 'BUTTON'
                 || e.target.tagName === 'SECTION'

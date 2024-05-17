@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import { gematriya } from '@hebcal/core';
 import '../css/Reader.css'
 import { useEffect, useRef, useState/* , useLayoutEffect, useEffect, useCallback */ } from 'react';
@@ -63,9 +63,10 @@ export default function Reader({ type }) {
   function fontSmaller() {
     setFontSizeCoefficient(c => Math.round(c * 95) / 100)
   }
-
-  const [text, /* setText */] = useState(useLoaderData())
+  let loaderData = useLoaderData()
+  const [text, setText] = useState(loaderData)
   const [formattedText, setFormattedText] = useState()
+
   useEffect(() => {
     function perekName(n) {
       return `פרק ${gematriya(n).replaceAll('׳', '')}`
@@ -119,13 +120,18 @@ export default function Reader({ type }) {
         break
     }
 
-    const prevButton = !isFirst && <button key='prev'>Previous {typeText}</button>
-    const nextButton = !isLast && <button key='next'>Next {typeText}</button>
+    const currentNum = +window.location.href.match(/\d+$/)[0]
+    const prevButton = !isFirst && <Link className='navButton' key='prev' to={`/${type}/${currentNum - 1}`}>Previous {typeText}</Link>
+    const nextButton = !isLast && <Link className='navButton' key='next' to={`/${type}/${currentNum + 1}`}>Next {typeText}</Link >
 
     setFormattedText([prevButton, text.flatMap(datum => [<h2 className='perekHeading' key={datum.perek}>{perekName(datum.perek)}</h2>]
       .concat(datum.text.join(' ').split(' ').map(x => x + ' '))), nextButton].flat()
     )
-  }, [text])
+  }, [text, type])
+
+  useEffect(() => {
+    setText(loaderData)
+  }, [loaderData])
 
   return (
     <div id='readerContainer'>
