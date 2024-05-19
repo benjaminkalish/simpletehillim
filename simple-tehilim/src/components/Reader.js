@@ -60,17 +60,9 @@ export default function Reader({ type }) {
   const [fontSizeCoefficient, setFontSizeCoefficient] = useState(localStorage.fontSizeCoefficient || 1)
   const [showFontSize, setShowFontSize] = useState(false)
 
-  function fontLarger() {
+  function upDateFontSizeCoefficient(percent) {
     setFontSizeCoefficient(c => {
-      const coefficient = Math.round(c * 105) / 100
-      localStorage.fontSizeCoefficient = coefficient
-      return coefficient
-    })
-  }
-
-  function fontSmaller() {
-    setFontSizeCoefficient(c => {
-      const coefficient = Math.round(c * 95) / 100
+      const coefficient = Math.round(c * percent) / 100
       localStorage.fontSizeCoefficient = coefficient
       return coefficient
     })
@@ -162,8 +154,8 @@ export default function Reader({ type }) {
             <button onClick={() => setShowFontSize(!showFontSize)}>Font Size</button>
             {showFontSize &&
               <div id='fontSize'>
-                <button onClick={fontSmaller}>&#65293;</button>
-                <button onClick={fontLarger}>&#65291;</button>
+                <button onClick={()=>upDateFontSizeCoefficient(95)}>&#65293;</button>
+                <button onClick={()=>upDateFontSizeCoefficient(105)}>&#65291;</button>
               </div>}
           </li>}
         </ul>
