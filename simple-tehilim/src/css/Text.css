@@ -8,10 +8,10 @@
     src: url(../fonts/DavidLibre-Medium.ttf);
 }
 
-@font-face {
+/* @font-face {
     font-family: "Frank-Ruhl";
     src: url(../fonts/FrankRuhlLibre-Regular.ttf);
-}
+} */
 
 #textContainer {
     grid-column: 5 / 6;

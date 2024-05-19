@@ -48,21 +48,34 @@ export default function Reader({ type }) {
   }
 
   const [fontShown, setFontShown] = useState(false)
-  const [font, setFont] = useState(fonts.times)
+  const [font, setFont] = useState(localStorage.font || fonts.times)
 
-  const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] && 'selectedFont'} onClick={() => setFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
+  const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] && 'selectedFont'} onClick={() => updateFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
+  function updateFont(fontName) {
+    localStorage.font = fontName
+    setFont(fontName)
+  }
 
-  const [fontSizeCoefficient, setFontSizeCoefficient] = useState(1)
+  const [fontSizeCoefficient, setFontSizeCoefficient] = useState(localStorage.fontSizeCoefficient || 1)
   const [showFontSize, setShowFontSize] = useState(false)
 
   function fontLarger() {
-    setFontSizeCoefficient(c => Math.round(c * 105) / 100)
+    setFontSizeCoefficient(c => {
+      const coefficient = Math.round(c * 105) / 100
+      localStorage.fontSizeCoefficient = coefficient
+      return coefficient
+    })
   }
 
   function fontSmaller() {
-    setFontSizeCoefficient(c => Math.round(c * 95) / 100)
+    setFontSizeCoefficient(c => {
+      const coefficient = Math.round(c * 95) / 100
+      localStorage.fontSizeCoefficient = coefficient
+      return coefficient
+    })
   }
+
   let loaderData = useLoaderData()
   const [text, setText] = useState(loaderData)
   const [formattedText, setFormattedText] = useState()
