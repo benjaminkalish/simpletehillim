@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect, useCallback } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import '../css/Text.css'
 // import { flushSync } from 'react-dom'
 // import { throttle } from 'lodash'
@@ -30,7 +30,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
         layoutInitialize()
     }, [layoutInitialize, font, fontSizeCoefficient])
 
-    const initialInterval = maxWords / 6
+    const initialInterval = Math.ceil(maxWords / 6)
     const interval = useRef(initialInterval)
     const topDown = useRef(true)
 

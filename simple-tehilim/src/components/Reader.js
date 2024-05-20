@@ -4,6 +4,7 @@ import '../css/Reader.css'
 import { useEffect, useRef, useState/* , useLayoutEffect, useEffect, useCallback */ } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Text from './Text';
+import Help from './Help';
 // import TrippleText from './TrippleText';
 // import TestText from './TestText';
 // import TestText2 from './TestText2';
@@ -138,29 +139,37 @@ export default function Reader({ type }) {
     setText(loaderData)
   }, [loaderData])
 
+  const [helpShown, setHelpShown] = useState(false)
+
   return (
-    <div id='readerContainer'>
-      <button id='menuButton' onClick={menuButtonHandler}>{menuButtonText.current}</button>
-      <section id='menu'>
-        <ul>
-          <li>
-            <a href='/' onClick={(e) => navigateTo(e, '/')}><button>Home</button></a>
-          </li>
-          <li>
-            <button onClick={() => setFontShown(!fontShown)}>Select Font</button>
-            {fontShown && <ul>{fontList}</ul>}
-          </li>
-          {<li>
-            <button onClick={() => setShowFontSize(!showFontSize)}>Font Size</button>
-            {showFontSize &&
-              <div id='fontSize'>
-                <button onClick={()=>upDateFontSizeCoefficient(95)}>&#65293;</button>
-                <button onClick={()=>upDateFontSizeCoefficient(105)}>&#65291;</button>
-              </div>}
-          </li>}
-        </ul>
-      </section>
-      {formattedText && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
-    </div>
+    <>
+      <div id='readerContainer'>
+        <button id='menuButton' onClick={menuButtonHandler}>{menuButtonText.current}</button>
+        <section id='menu'>
+          <ul>
+            <li>
+              <a href='/' onClick={(e) => navigateTo(e, '/')}><button>Home</button></a>
+            </li>
+            <li>
+              <button onClick={() => setFontShown(!fontShown)}>Select Font</button>
+              {fontShown && <ul>{fontList}</ul>}
+            </li>
+            {<li>
+              <button onClick={() => setShowFontSize(!showFontSize)}>Font Size</button>
+              {showFontSize &&
+                <div id='fontSize'>
+                  <button onClick={() => upDateFontSizeCoefficient(95)}>&#65293;</button>
+                  <button onClick={() => upDateFontSizeCoefficient(105)}>&#65291;</button>
+                </div>}
+            </li>}
+            <li>
+              <button onClick={() => setHelpShown(h => !h)}>Help</button>
+            </li>
+          </ul>
+        </section>
+        {formattedText && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
+      </div>
+      {helpShown && <Help setHelpShown={setHelpShown}/>}
+    </>
   )
 }
