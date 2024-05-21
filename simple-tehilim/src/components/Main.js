@@ -32,7 +32,7 @@ export default function Main() {
         <main id='home'>
             <div>
                 <h1>Daily Tehilim</h1>
-                <h3>Clear. Readable. Usable.</h3>
+                <h3>Simple to use. Easy to read.</h3>
                 <div id='buttonContainer'>
                     <button onClick={() => { setPerakimShown(true); setSefarimShown(false); }}>Select Perek</button>
                     <button onClick={() => { setPerakimShown(false); setSefarimShown(true); }}>Select Sefer</button>

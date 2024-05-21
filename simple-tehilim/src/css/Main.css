@@ -54,7 +54,7 @@ button {
 }
 
 button:hover {
-    background-color:#eaeab4;
+    background-color: #eaeab4;
 }
 
 img {
@@ -73,19 +73,20 @@ img {
     align-items: center;
     background-color: rgba(245, 245, 220, 0.85);
     opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 0.3s;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.3s;
 }
 
 @keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .selector button {
@@ -110,4 +111,39 @@ img {
 
 section .buttonLink {
     margin: 3px;
+}
+
+@media screen and (max-width: 500px) {
+    section img {
+        /* display: none; */
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: -1;
+        height: 100%;
+        width: fit-content;
+    }
+
+    main {
+        background-color: rgba(0, 0, 128, 0.85);
+        flex-direction: column;
+    }
+
+    main>div,
+    main>section,
+    .selector {
+        width: 100%;
+        height: 50%;
+    }
+
+    /* main>div {
+        max-width: 100%;
+        min-width: 50%;
+    }
+
+    main>section {
+        min-width: 0;
+        max-width: 50%;
+    } */
 }
