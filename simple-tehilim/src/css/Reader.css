@@ -115,4 +115,8 @@ li ul button {
         flex-direction: column-reverse;
         align-items: center;
     }
+
+    #readerContainer {
+        grid-template-columns: 3px 50px 1fr 20px 3fr 20px 1fr 60px;
+    }
 }

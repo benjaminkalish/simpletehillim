@@ -76,6 +76,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
                 || e.target.tagName === 'SECTION'
                 || e.target.tagName === 'UL'
                 || e.target.tagName === 'LI'
+                || e.target.tagName === 'A'
         }
 
         function pageForward() {

@@ -29,12 +29,7 @@ async function loader(pathName) {
       const data = await response.json()
       return data
   } catch (e) {
-      if (e.name === 'AbortError') {
-          console.log(`fetch cancelled: ${e.message}`);
-      }
-      else {
           console.error(e.message)
-      }
   }
 }
 
