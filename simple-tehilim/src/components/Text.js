@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import '../css/Text.css'
+import PropTypes from 'prop-types';
 // import { flushSync } from 'react-dom'
 // import { throttle } from 'lodash'
 // const throttle = require('lodash/throttle')
@@ -188,4 +189,10 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
             </div>
         </div>
     )
+}
+
+Text.propTypes = {
+    formattedText: PropTypes.array,
+    font: PropTypes.string,
+    fontSizeCoefficient: PropTypes.number
 }
