@@ -22,9 +22,9 @@ app.use('/api', tehillimApiRouter);
 
 
 app.use('/static', express.static(path.join(__dirname, 'tehillim_react/build//static')));
-app.get('*', function(req, res, next) {
+app.use('/', express.static(path.join(__dirname, 'tehillim_react/build/')));
+app.get('*', function(req, res) {
   res.sendFile('index.html', {root: path.join(__dirname, 'tehillim_react/build/')});
-  // next();
 });
 // app.use('/users', usersRouter);
 
@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
