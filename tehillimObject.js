@@ -1,4 +1,4 @@
-function tehilimObject(x, i) {
+function tehillimObject(x, i) {
     return {
         text: x,
         perek: i + 1,
@@ -107,4 +107,4 @@ function seferFinder(perek) {
     }
 }
 
-module.exports = tehilimObject;
+module.exports = tehillimObject;

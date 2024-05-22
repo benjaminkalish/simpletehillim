@@ -77,6 +77,9 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
                 || e.target.tagName === 'UL'
                 || e.target.tagName === 'LI'
                 || e.target.tagName === 'A'
+                || e.target.tagName === 'P'
+                || e.target.id === 'modal'
+                || e.target.id === 'helpBox'
         }
 
         function pageForward() {
@@ -173,7 +176,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
         fontUnit = 'vw'
     }
     else {
-        defaultFontSize = 4
+        defaultFontSize = 5
         fontUnit = 'vh'
     }
 

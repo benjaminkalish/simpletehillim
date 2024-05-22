@@ -19,6 +19,7 @@
     grid-row: 2 / 4;
     scrollbar-width: none;
     position: relative;
+    padding-left: 8px;
 }
 
 #innerTextContainer {
@@ -43,6 +44,7 @@
 }
 
 .navButton {
+    text-align: center;
     text-align-last: center;
     width: fit-content;
     align-self: center;
@@ -83,8 +85,8 @@
 
 @media screen and (max-width: 500px) {
     #textContainer {
-        grid-column: 3 / 8;
-        padding-left: 7px;
+        grid-row-start: 3;
+        grid-column: 2 / 8;
     }
 
     /*  #innerTextContainer {

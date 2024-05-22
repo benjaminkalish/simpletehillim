@@ -1,16 +1,17 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs').promises;
-const tehilimObject = require('../tehilimObject');
+const tehillimObject = require('../tehillimObject');
 var path = require('path');
 const cors = require('cors');
+const HDate = require('@hebcal/core').HDate;
 
-let tehilim;
+let tehillim;
 
 (async () => {
-  const tehilimArr = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'psalms.json')));
-  const text = tehilimArr.text;
-  tehilim = text.map((x, i) => { return tehilimObject(x, i); });
+  const tehillimArr = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'psalms.json')));
+  const text = tehillimArr.text;
+  tehillim = text.map((x, i) => { return tehillimObject(x, i); });
 })();
 
 router.use(cors());
@@ -20,7 +21,7 @@ router.get('/perek/:num', function (req, res, next) {
   if (perek < 1 || perek > 150 || isNaN(perek)) {
     return next('no such perek');
   }
-  res.json([tehilim[perek - 1]]);
+  res.json([tehillim[perek - 1]]);
 });
 
 router.get('/month/:num', function (req, res, next) {
@@ -31,7 +32,7 @@ router.get('/month/:num', function (req, res, next) {
   else {
     if (day === 25) {
       res.json({
-        test: tehilim[118].text.slice(0, 96),
+        test: tehillim[118].text.slice(0, 96),
         dayMonth: 25,
         dayWeek: 6,
         sefer: 5
@@ -40,14 +41,19 @@ router.get('/month/:num', function (req, res, next) {
     }
     else if (day === 26) {
       res.json({
-        text: tehilim[118].text.slice(96),
+        text: tehillim[118].text.slice(96),
         dayMonth: 26,
         dayWeek: 6,
         sefer: 5
       });
     }
+    else if (day === 29) {
+      const hebDay = new HDate(new Date());
+      const isChaseir = hebDay.daysInMonth() === 29;
+      res.json(tehillim.filter(x => x.dayMonth === day || (x.dayMonth === 30 && isChaseir)));
+    }
     else {
-      res.json(tehilim.filter((x) => x.dayMonth === day));
+      res.json(tehillim.filter(x => x.dayMonth === day));
     }
   }
 });
@@ -58,7 +64,7 @@ router.get('/week/:num', function (req, res, next) {
     next('invalid day of week');
   }
   else {
-    res.json(tehilim.filter(x => x.dayWeek === day));
+    res.json(tehillim.filter(x => x.dayWeek === day));
   }
 });
 
@@ -68,7 +74,7 @@ router.get('/sefer/:num', function (req, res, next) {
     next('invalid day of week');
   }
   else {
-    res.json(tehilim.filter(x => x.sefer === sefer));
+    res.json(tehillim.filter(x => x.sefer === sefer));
   }
 
 });

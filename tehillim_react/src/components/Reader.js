@@ -88,42 +88,46 @@ export default function Reader({ type }) {
         if (text[0].perek === 1) {
           isFirst = true
         }
-        else if (text[0].perek === 150) {
+        /* else if (text[0].perek === 150) {
           isLast = true
-        }
+        } */
         break
       case 'month':
-        typeText = 'Day'
+        typeText = 'Day\'s Tehillim'
         if (text[0].dayMonth === 1) {
           isFirst = true
         }
-        else if (text[0].dayMonth === 30) {
+        /* else if (text[0].dayMonth === 30) {
           isLast = true
-        }
+        } */
         break
       case 'week':
-        typeText = 'Day'
+        typeText = 'Day\'s Tehillim'
         if (text[0].dayWeek === 1) {
           isFirst = true
         }
-        if (text[0].dayWeek === 7) {
+        /* if (text[0].dayWeek === 7) {
           isLast = true
-        }
+        } */
         break
       case 'sefer':
         typeText = 'Sefer'
         if (text[0].sefer === 1) {
           isFirst = true
         }
-        if (text[0].sefer === 5) {
+        /* if (text[0].sefer === 5) {
           isLast = true
-        }
+        } */
         break
       default:
         typeText = undefined
         isFirst = true
         isLast = true
         break
+    }
+
+    if (text[text.length - 1].perek === 150) {
+      isLast = true
     }
 
     const currentNum = +window.location.href.match(/\d+$/)[0]
@@ -169,7 +173,7 @@ export default function Reader({ type }) {
         </section>
         {formattedText && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
       </div>
-      {helpShown && <Help setHelpShown={setHelpShown}/>}
+      {helpShown && <Help setHelpShown={setHelpShown} />}
     </>
   )
 }

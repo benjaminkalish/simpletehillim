@@ -31,7 +31,7 @@ export default function Main() {
     return (
         <main id='home'>
             <div>
-                <h1>Daily Tehilim</h1>
+                <h1>Simple Tehilim</h1>
                 <h3>Simple to use. Easy to read.</h3>
                 <div id='buttonContainer'>
                     <button onClick={() => { setPerakimShown(true); setSefarimShown(false); }}>Select Perek</button>
