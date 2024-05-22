@@ -1,6 +1,6 @@
 #readerContainer {
     display: grid;
-    grid-template-rows: 10px 50px 1fr;
+    grid-template-rows: 10px 50px 1fr 5px;
     grid-template-columns: 10px 50px 1fr 12px 3fr 20px 1fr 60px;
     background-color: #fdfbf7;
     height: 100%;
