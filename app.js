@@ -17,9 +17,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+// app.use(express.static(path.join(__dirname, 'tehillim_react/build')));
 app.use('/api', tehillimApiRouter);
+
+
+app.use('/static', express.static(path.join(__dirname, 'tehillim_react/build//static')));
+app.get('*', function(req, res, next) {
+  res.sendFile('index.html', {root: path.join(__dirname, 'tehillim_react/build/')});
+  // next();
+});
 // app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
