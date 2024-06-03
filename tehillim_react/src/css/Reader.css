@@ -62,6 +62,8 @@ ul button {
     color: #fdfbf7;
     border: none;
     text-align: left;
+    font-size: 1.5vw;
+    margin-top: 0.5vw;
 }
 
 .selectedFont {
@@ -103,11 +105,12 @@ li ul button {
     width: 50px;
     border-radius: 50%;
     border: #fdfbf7 3px solid;
-    font-size: 70px;
+    font-size: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 28px;
+    font-weight: bold;
+    /* padding-bottom: 28px; */
 }
 
 @media screen and (max-width: 500px) {
