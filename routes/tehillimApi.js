@@ -31,21 +31,23 @@ router.get('/month/:num', function (req, res, next) {
   }
   else {
     if (day === 25) {
-      res.json({
+      res.json([{
         test: tehillim[118].text.slice(0, 96),
         dayMonth: 25,
         dayWeek: 6,
-        sefer: 5
-      });
+        sefer: 5,
+        perek: 118
+      }]);
 
     }
     else if (day === 26) {
-      res.json({
+      res.json([{
         text: tehillim[118].text.slice(96),
         dayMonth: 26,
         dayWeek: 6,
-        sefer: 5
-      });
+        sefer: 5,
+        perek: 118
+      }]);
     }
     else if (day === 29) {
       const hebDay = new HDate(new Date());
