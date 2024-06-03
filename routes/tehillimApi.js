@@ -32,7 +32,7 @@ router.get('/month/:num', function (req, res, next) {
   else {
     if (day === 25) {
       res.json([{
-        test: tehillim[118].text.slice(0, 96),
+        text: tehillim[118].text.slice(0, 96),
         dayMonth: 25,
         dayWeek: 6,
         sefer: 5,
