@@ -27,8 +27,11 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
     }, [formattedText, layoutInitialize])
 
     useEffect(() => {
-        setOpacity(0)
-        layoutInitialize()
+        (async function(){
+            setOpacity(0)
+            await document.fonts.ready
+            layoutInitialize()
+        })()
     }, [layoutInitialize, font, fontSizeCoefficient])
 
     const initialInterval = Math.ceil(maxWords / 6)
