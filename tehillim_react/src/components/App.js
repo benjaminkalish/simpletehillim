@@ -23,7 +23,7 @@ function App() {
 
 async function loader(pathName) {
   // try {
-    const response = await fetch(/* window.location.origin + '/api' */'http://localhost:8080/api' + pathName)
+    const response = await fetch(window.location.origin + '/api'/* 'http://localhost:8080/api' */ + pathName)
     if (!response.ok) {
       throw new Response({status: response.status, message: response.statusText})
     }
