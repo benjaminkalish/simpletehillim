@@ -5,7 +5,7 @@ import { useEffect, useRef, useState/* , useLayoutEffect, useEffect, useCallback
 import { useNavigate } from 'react-router-dom';
 import Text from './Text';
 import Help from './Help';
-import { flushSync } from 'react-dom'
+// import { flushSync } from 'react-dom'
 // import TrippleText from './TrippleText';
 // import TestText from './TestText';
 // import TestText2 from './TestText2';
@@ -50,17 +50,14 @@ export default function Reader({ type }) {
   }
 
   const [fontShown, setFontShown] = useState(false)
-  const [font, setFont] = useState(localStorage.font || fonts.times)
+  const localStorageFont = localStorage.font
+  const [font, setFont] = useState(localStorageFont || fonts.times)
 
   const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] && 'selectedFont'} onClick={() => updateFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
   function updateFont(fontName) {
-    flushSync(
-      async () => {
-        localStorage.font = fontName
-        setFont(fontName)
-        await document.fonts.ready
-      })
+    localStorage.font = fontName
+    setFont(fontName)
   }
 
   const [fontSizeCoefficient, setFontSizeCoefficient] = useState(localStorage.fontSizeCoefficient || 1)
