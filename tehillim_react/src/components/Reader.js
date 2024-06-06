@@ -167,7 +167,7 @@ export default function Reader({ type }) {
             </li>
           </ul>
         </section>
-        {formattedText && font && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
+        {formattedText && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
       </div>
       {helpShown && <Help setHelpShown={setHelpShown} />}
     </>

@@ -15,10 +15,29 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
     const didMount = useRef(false)
     const maxWords = 60
 
-    const layoutInitialize = useCallback(() => {
+    let defaultFontSize
+    let fontUnit
+
+    if (window.innerWidth > 500) {
+        defaultFontSize = 3.5
+        fontUnit = 'vw'
+    }
+    else {
+        defaultFontSize = 5
+        fontUnit = 'vh'
+    }
+
+    const innerTextContainerStyle = {
+        opacity: opacity,
+        fontFamily: font,
+        fontSize: defaultFontSize * fontSizeCoefficient + fontUnit
+    }
+
+    const layoutInitialize = useCallback(async () => {
+        await document.fonts.load(`${innerTextContainerStyle.fontSize} ${font}`)
         bottomIndex.current = maxWords + topIndex.current
         setVisibleText([topIndex.current, bottomIndex.current])
-    }, [])
+    }, [font, innerTextContainerStyle.fontSize])
 
     useEffect(() => {
         topIndex.current = 0
@@ -27,11 +46,11 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
     }, [formattedText, layoutInitialize])
 
     useEffect(() => {
-        (async function(){
+        // (async function(){
             setOpacity(0)
-            await document.fonts.ready
+            // await document.fonts.ready
             layoutInitialize()
-        })()
+        // })()
     }, [layoutInitialize, font, fontSizeCoefficient])
 
     const initialInterval = Math.ceil(maxWords / 6)
@@ -171,23 +190,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
 
 
 
-    let defaultFontSize
-    let fontUnit
-
-    if (window.innerWidth > 500) {
-        defaultFontSize = 3.5
-        fontUnit = 'vw'
-    }
-    else {
-        defaultFontSize = 5
-        fontUnit = 'vh'
-    }
-
-    const innerTextContainerStyle = {
-        opacity: opacity,
-        fontFamily: font,
-        fontSize: defaultFontSize * fontSizeCoefficient + fontUnit
-    }
+    
 
     return (
         <div id='textContainer' ref={textContainerRef}>
