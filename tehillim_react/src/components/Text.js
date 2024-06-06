@@ -22,8 +22,11 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
 
     useEffect(() => {
         topIndex.current = 0
-        setOpacity(0)
-        layoutInitialize()
+        (async function(){
+            setOpacity(0)
+            await document.fonts.ready
+            layoutInitialize()
+        })()
     }, [formattedText, layoutInitialize])
 
     useEffect(() => {
