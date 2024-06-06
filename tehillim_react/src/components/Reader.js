@@ -5,6 +5,7 @@ import { useEffect, useRef, useState/* , useLayoutEffect, useEffect, useCallback
 import { useNavigate } from 'react-router-dom';
 import Text from './Text';
 import Help from './Help';
+import { flushSync } from 'react-dom'
 // import TrippleText from './TrippleText';
 // import TestText from './TestText';
 // import TestText2 from './TestText2';
@@ -55,7 +56,7 @@ export default function Reader({ type }) {
 
   function updateFont(fontName) {
     localStorage.font = fontName
-    setFont(fontName)
+    flushSync(() => {setFont(fontName)})
   }
 
   const [fontSizeCoefficient, setFontSizeCoefficient] = useState(localStorage.fontSizeCoefficient || 1)
