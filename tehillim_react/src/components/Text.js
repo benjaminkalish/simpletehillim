@@ -113,7 +113,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
             pageForward()
         }
 
-        function rightClickHandeler(e) {
+        function rightClickHandler(e) {
             if (isWrongClickTarget(e)) {
                 return
             }
@@ -157,14 +157,14 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
         window.addEventListener('keydown', keydownHandler)
         window.addEventListener('resize', layoutInitialize)
         window.addEventListener('click', clickHandler)
-        window.addEventListener('contextmenu', rightClickHandeler)
+        window.addEventListener('contextmenu', rightClickHandler)
         window.addEventListener('wheel', wheelHandler)
 
         return () => {
             window.removeEventListener('keydown', keydownHandler)
             window.removeEventListener('resize', layoutInitialize)
             window.removeEventListener('click', clickHandler)
-            window.removeEventListener('contextmenu', rightClickHandeler)
+            window.removeEventListener('contextmenu', rightClickHandler)
             window.removeEventListener('wheel', wheelHandler)
         }
     }, [formattedText.length, layoutInitialize])
