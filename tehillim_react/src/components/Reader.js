@@ -6,11 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import Text from './Text';
 import Help from './Help';
 // import { flushSync } from 'react-dom'
-// import TrippleText from './TrippleText';
-// import TestText from './TestText';
-// import TestText2 from './TestText2';
-
-// import useGetElementDimensions from '../useGetElementDimensions';
 
 export default function Reader({ type }) {
   const openSymbol = '☰'
@@ -50,8 +45,7 @@ export default function Reader({ type }) {
   }
 
   const [fontShown, setFontShown] = useState(false)
-  const localStorageFont = localStorage.font
-  const [font, setFont] = useState(localStorageFont || fonts.times)
+  const [font, setFont] = useState(localStorage.font || fonts.times)
 
   const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] && 'selectedFont'} onClick={() => updateFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
@@ -173,7 +167,7 @@ export default function Reader({ type }) {
             </li>
           </ul>
         </section>
-        {formattedText && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
+        {formattedText && font && <Text formattedText={formattedText} font={font} fontSizeCoefficient={fontSizeCoefficient} />}
       </div>
       {helpShown && <Help setHelpShown={setHelpShown} />}
     </>
