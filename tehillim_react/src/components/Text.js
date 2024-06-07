@@ -1,9 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import '../css/Text.css'
 import PropTypes from 'prop-types';
-// import { flushSync } from 'react-dom'
-// import { throttle } from 'lodash'
-// const throttle = require('lodash/throttle')
 
 export default function Text({ formattedText, font, fontSizeCoefficient }) {
     const [visibleText, setVisibleText] = useState([0, 0])
@@ -41,17 +38,12 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
 
     useEffect(() => {
         topIndex.current = 0
-        setOpacity(0)
-        layoutInitialize()
-    }, [formattedText, layoutInitialize])
+    }, [formattedText])
 
     useEffect(() => {
-        // (async function(){
-            setOpacity(0)
-            // await document.fonts.ready
-            layoutInitialize()
-        // })()
-    }, [layoutInitialize, font, fontSizeCoefficient])
+        setOpacity(0)
+        layoutInitialize()
+    }, [layoutInitialize, font, fontSizeCoefficient, formattedText])
 
     const initialInterval = Math.ceil(maxWords / 6)
     const interval = useRef(initialInterval)
@@ -190,7 +182,7 @@ export default function Text({ formattedText, font, fontSizeCoefficient }) {
 
 
 
-    
+
 
     return (
         <div id='textContainer' ref={textContainerRef}>

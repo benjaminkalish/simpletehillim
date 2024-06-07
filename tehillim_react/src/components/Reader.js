@@ -47,14 +47,14 @@ export default function Reader({ type }) {
   const [fontShown, setFontShown] = useState(false)
   const [font, setFont] = useState(localStorage.font || fonts.times)
 
-  const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] && 'selectedFont'} onClick={() => updateFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
+  const fontList = Object.entries(fonts).map(x => <li key={x[0]}> <button className={font === x[1] ? 'selectedFont' : ''} onClick={() => updateFont(x[1])}>{x[0].replace('_', ' ')}</button></li>)
 
   function updateFont(fontName) {
     localStorage.font = fontName
     setFont(fontName)
   }
 
-  const [fontSizeCoefficient, setFontSizeCoefficient] = useState(localStorage.fontSizeCoefficient || 1)
+  const [fontSizeCoefficient, setFontSizeCoefficient] = useState(+localStorage.fontSizeCoefficient || 1)
   const [showFontSize, setShowFontSize] = useState(false)
 
   function upDateFontSizeCoefficient(percent) {
