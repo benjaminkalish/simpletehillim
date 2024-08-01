@@ -25,9 +25,16 @@
   user-select: none;
 }
 
-/* #helpbox p {
+#helpBox section {
+  width: 90%;
+}
 
-} */
+#helpBox h4 {
+  margin-bottom: 0;
+  /* text-decoration: underline; */
+  border-bottom: 2px solid black;
+  width: fit-content;
+}
 
 #helpBox button {
   background-color: navy;
