@@ -1,163 +1,163 @@
 main {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    background-color: navy;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background-color: navy;
 }
 
-main>div,
-main>section {
-    width: 50%;
-    text-align: center;
-    color: beige;
+main > div,
+main > section {
+  width: 50%;
+  text-align: center;
+  color: beige;
 }
 
 section {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-main>div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+main > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #homeContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
-    text-wrap: nowrap;
-    font-size: 3vw;
+  text-wrap: nowrap;
+  font-size: 3vw;
 }
 
 h3 {
-    font-size: 1.75vw;
+  font-size: 1.75vw;
 }
 
 #buttonContainer {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 3px;
-    margin-top: 10%;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 10%;
 }
 
 button {
-    border-radius: 28px;
-    padding: 16px 20px;
-    background-color: beige;
-    color: navy;
-    font-size: 1.75vw;
-    cursor: pointer;
-    font-family: 'Times New Roman', Times, serif;
-    margin-top: 1vw;
+  border-radius: 28px;
+  padding: 16px 20px;
+  background-color: beige;
+  color: navy;
+  font-size: 1.75vw;
+  cursor: pointer;
+  font-family: "Times New Roman", Times, serif;
+  margin-top: 1vw;
 }
 
 button:hover {
-    background-color: #eaeab4;
+  background-color: #eaeab4;
 }
 
 img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .selector {
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    overflow: auto;
-    justify-content: space-around;
-    align-items: center;
-    background-color: rgba(245, 245, 220, 0.85);
-    opacity: 1;
-    animation-name: fadeInOpacity;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-duration: 0.3s;
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  overflow: auto;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(245, 245, 220, 0.85);
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
 }
 
 @keyframes fadeInOpacity {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 .selector button {
-    width: 5em;
-    background-color: navy;
-    color: beige;
+  width: 5em;
+  background-color: navy;
+  color: beige;
 }
 
 .selector button:hover {
-    width: 5em;
-    background-color: mediumblue;
-    color: beige;
+  width: 5em;
+  background-color: mediumblue;
+  color: beige;
 }
 
 #sefer button {
-    width: max-content;
+  width: max-content;
 }
 
 .buttonLink {
-    border-radius: 28px;
+  border-radius: 28px;
 }
 
 section .buttonLink {
-    margin: 3px;
+  margin: 3px;
 }
 
 @media screen and (max-width: 500px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
 
-    html,
-    body {
-        overflow-x: hidden;
-    }
+  body {
+    position: relative;
+  }
 
-    body {
-        position: relative;
-    }
+  section img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: -1;
+    width: fit-content;
+  }
 
-    section img {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, 0);
-        z-index: -1;
-        width: fit-content;
-    }
+  main {
+    background-color: rgba(0, 0, 128, 0.85);
+    flex-direction: column;
+  }
 
-    main {
-        background-color: rgba(0, 0, 128, 0.85);
-        flex-direction: column;
-    }
+  main > div,
+  main > section,
+  .selector {
+    width: 100%;
+    height: 50%;
+  }
 
-    main>div,
-    main>section,
-    .selector {
-        width: 100%;
-        height: 50%;
-    }
+  button {
+    font-size: 0.9rem;
+  }
 
-    button {
-        font-size: 0.9rem;
-    }
-
-    h1, h3 {
-        font-size: revert;
-    }
+  h1,
+  h3 {
+    font-size: revert;
+  }
 }

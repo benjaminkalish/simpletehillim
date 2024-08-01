@@ -1,80 +1,80 @@
 @font-face {
-    font-family: "Stam";
-    src: url(../fonts/StamAshkenazCLM-Medium.otf);
+  font-family: "Stam";
+  src: url(../fonts/StamAshkenazCLM-Medium.otf);
 }
 
 @font-face {
-    font-family: "David";
-    src: url(../fonts/DavidLibre-Medium.ttf);
+  font-family: "David";
+  src: url(../fonts/DavidLibre-Medium.ttf);
 }
 
 @font-face {
-    font-family: "Frank-Ruhl";
-    src: url(../fonts/FrankRuhlLibre-Regular.ttf);
+  font-family: "Frank-Ruhl";
+  src: url(../fonts/FrankRuhlLibre-Regular.ttf);
 }
 
 #textContainer {
-    grid-column: 5 / 6;
-    /*  white-space: pre-wrap;
+  grid-column: 5 / 6;
+  /*  white-space: pre-wrap;
     text-align: justify;
     direction: rtl;
     font-size: xxx-large; */
-    overflow-y: auto;
-    grid-row: 2 / 4;
-    scrollbar-width: none;
-    /* grid-row-start: 3; */
-    position: relative;
+  overflow-y: auto;
+  grid-row: 2 / 4;
+  scrollbar-width: none;
+  /* grid-row-start: 3; */
+  position: relative;
 }
 
-
 .innerTextContainer {
-    white-space: pre-wrap;
-    text-align: justify;
-    direction: rtl;
-    /* font-size: xxx-large; */
-    overflow-y: visible;
-    /* font-family: Frank-Ruhl; */
-    /* font-family: Stam; */
-    /* font-family: David; */
-    /* columns: 672px auto; */
-    /* font-family: Verdana; */
-    /* font-family: 'Times New Roman', Times, serif; */
-    /* column-count: auto; */
-    /* column-width: 672px; */
-    /* column-gap: 0; */
-    /* height: 100%; */
-    /* position: relative; */
-    /* overflow-x: hidden; */
-    /* min-width: fit-content; */
-    font-size: 3.5vw;
-    /* text-align-last: justify; */
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #fdfbf7;
-    position: absolute;
+  white-space: pre-wrap;
+  text-align: justify;
+  direction: rtl;
+  /* font-size: xxx-large; */
+  overflow-y: visible;
+  /* font-family: Frank-Ruhl; */
+  /* font-family: Stam; */
+  /* font-family: David; */
+  /* columns: 672px auto; */
+  /* font-family: Verdana; */
+  /* font-family: 'Times New Roman', Times, serif; */
+  /* column-count: auto; */
+  /* column-width: 672px; */
+  /* column-gap: 0; */
+  /* height: 100%; */
+  /* position: relative; */
+  /* overflow-x: hidden; */
+  /* min-width: fit-content; */
+  font-size: 3.5vw;
+  /* text-align-last: justify; */
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #fdfbf7;
+  position: absolute;
 }
 
 /* .innerTextContainer *:last-child {
     text-align-last: justify;
 } */
 
-#innerTextContainer h2, .innerTextContainer h2 {
-    margin: 0;
-    text-align: right;
-    width: fit-content;
+#innerTextContainer h2,
+.innerTextContainer h2 {
+  margin: 0;
+  text-align: right;
+  width: fit-content;
 }
 
 .perek p {
-    margin: 0px;
+  margin: 0px;
 }
 
 @media screen and (max-width: 500px) {
-    #textContainer {
-        grid-column: 3 / 8;
-    }
+  #textContainer {
+    grid-column: 3 / 8;
+  }
 
-    .innerTextContainer {
-        font-size: 4vh;
-    }
+  .innerTextContainer {
+    font-size: 4vh;
+  }
 }

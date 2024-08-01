@@ -1,29 +1,27 @@
-import {useLayoutEffect, useState} from 'react'
+import { useLayoutEffect, useState } from "react";
 
-export default function useGetElementDimensions(element){
+export default function useGetElementDimensions(element) {
+  // element = element || {}
+  // console.log(element)
 
-    // element = element || {}
-    // console.log(element)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-    const [dimensions, setDimensions] = useState({width: 0, height: 0})
+  useLayoutEffect(() => {
+    function updateDimensions() {
+      setDimensions({
+        width: element.clientWidth,
+        height: element.clientHeight,
+      });
+      console.log(element);
+    }
 
-    useLayoutEffect(() => {
-        
-        function updateDimensions(){
-            setDimensions({
-                width: element.clientWidth,
-                height: element.clientHeight
-            })
-            console.log(element)
-        }
+    window.addEventListener("resize", updateDimensions);
 
-        window.addEventListener('resize', updateDimensions)
+    updateDimensions();
 
-        updateDimensions()
-
-        return () => window.removeEventListener('resize', updateDimensions)
+    return () => window.removeEventListener("resize", updateDimensions);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+  }, []);
 
-    return dimensions
+  return dimensions;
 }
