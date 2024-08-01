@@ -1,90 +1,90 @@
 #readerContainer {
-    display: grid;
-    grid-template-rows: 10px 50px 1fr 5px;
-    grid-template-columns: 10px 50px 1fr 12px 3fr 20px 1fr 60px;
-    background-color: #fdfbf7;
-    height: 100%;
-    width: 100%;
-    margin: 0;
+  display: grid;
+  grid-template-rows: 10px 50px 1fr 5px;
+  grid-template-columns: 10px 50px 1fr 12px 3fr 20px 1fr 60px;
+  background-color: #fdfbf7;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 #menuButton {
-    grid-row: 2 / 3;
-    grid-column: 2 / 3;
-    background-color: #fdfbf7;
-    color: black;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 33px;
-    padding-bottom: 20px;
-    border: black solid 1px;
-    z-index: 2;
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  background-color: #fdfbf7;
+  color: black;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 33px;
+  padding-bottom: 20px;
+  border: black solid 1px;
+  z-index: 2;
 }
 
 #menuButton:hover {
-    border: black solid 2px;
+  border: black solid 2px;
 }
 
 #menuButton:active {
-    background-color: black;
-    color: #fdfbf7;
+  background-color: black;
+  color: #fdfbf7;
 }
 
 #menu {
-    grid-row: 1 / 4;
-    grid-column: 1 / 4;
-    background-color: navy;
-    transition: width .25s ease-in-out;
-    width: 0;
-    z-index: 1;
+  grid-row: 1 / 4;
+  grid-column: 1 / 4;
+  background-color: navy;
+  transition: width 0.25s ease-in-out;
+  width: 0;
+  z-index: 1;
 }
 
 .slideOpen {
-    transition: width 0.25s ease-in-out;
-    width: 100% !important;
+  transition: width 0.25s ease-in-out;
+  width: 100% !important;
 }
 
 ul {
-    margin-top: 70px;
-    list-style-type: none;
-    padding: 0;
-    text-wrap: nowrap;
+  margin-top: 70px;
+  list-style-type: none;
+  padding: 0;
+  text-wrap: nowrap;
 }
 
 ul button {
-    width: 100%;
-    border-radius: 0;
-    background-color: navy;
-    color: #fdfbf7;
-    border: none;
-    text-align: left;
-    font-size: 1.5vw;
-    margin-top: 0.5vw;
+  width: 100%;
+  border-radius: 0;
+  background-color: navy;
+  color: #fdfbf7;
+  border: none;
+  text-align: left;
+  font-size: 1.5vw;
+  margin-top: 0.5vw;
 }
 
 .selectedFont {
-    background-color: cornflowerblue;
-    color: gold;
+  background-color: cornflowerblue;
+  color: gold;
 }
 
 ul button:hover {
-    background-color: blue;
-    color: #fdfbf7;
+  background-color: blue;
+  color: #fdfbf7;
 }
 
 li ul {
-    margin: 0;
-    /* transition: height 5s ease-in-out; */
-    /* height: 0; */
+  margin: 0;
+  /* transition: height 5s ease-in-out; */
+  /* height: 0; */
 }
 
 li ul button {
-    text-align: right;
-    text-transform: capitalize;
+  text-align: right;
+  text-transform: capitalize;
 }
 
 /* li ul li {
@@ -92,34 +92,38 @@ li ul button {
 } */
 
 #fontSize {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap:20px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
 }
 
 #fontSize button {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    border: #fdfbf7 3px solid;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    /* padding-bottom: 28px; */
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: #fdfbf7 3px solid;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  /* padding-bottom: 28px; */
 }
 
 @media screen and (max-width: 500px) {
-    #fontSize {
-        flex-direction: column-reverse;
-        align-items: center;
-    }
+  #fontSize {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 
-    #readerContainer {
-        grid-template-columns: 12px 50px 1fr 0px 3fr 20px 1fr 20px;
-    }
+  #readerContainer {
+    grid-template-columns: 12px 50px 1fr 0px 3fr 20px 1fr 20px;
+  }
+
+  ul button {
+    font-size: 1rem;
+  }
 }
