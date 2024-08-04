@@ -19,7 +19,7 @@ export default function Help({ setHelpShown }) {
         <section>
           <h4>Mobile</h4>
           <p>To go forward one page, tap, swipe up, or swipe right.</p>
-          <p>To go back one page, two-finger tap, swipe down, or swipe left.</p>
+          <p>To go back one page, swipe down, or swipe left.</p>
         </section>
         <button onClick={() => setHelpShown((h) => !h)}>Got it!</button>
       </div>
